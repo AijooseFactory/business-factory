@@ -6,6 +6,9 @@ drizzle/meta/
 .vite/
 coverage/
 .DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
 data/
 .paperclip/
 .pnpm-store/
