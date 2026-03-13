@@ -1,0 +1,5 @@
+{
+  "plugins": [
+    "@aijoosefactory/paperclip-plugin-agent-zero"
+  ]
+}

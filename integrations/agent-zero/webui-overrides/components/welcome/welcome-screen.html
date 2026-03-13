@@ -1,0 +1,470 @@
+<html>
+
+<head>
+    <script type="module">
+        import { store } from "/components/welcome/welcome-store.js";
+    </script>
+</head>
+
+<body>
+    <div x-data>
+        <template x-if="$store.welcomeStore && $store.welcomeStore.isVisible">
+            <div x-create="$store.welcomeStore.onCreate()" class="welcome-container">
+                <div class="welcome-content">
+                    <div class="welcome-projects-panel"
+                         x-show="$store.welcomeStore.welcomeProjects.length > 0 || $store.welcomeStore.projectListLoading">
+                        <div class="welcome-section-header">
+                            <div>
+                                <div class="welcome-section-kicker">Continue Work</div>
+                                <h2 class="welcome-section-title">Start in a project-scoped chat</h2>
+                                <p class="welcome-section-copy">
+                                    Launch a fresh chat already bound to a project so the first message has the right workspace context.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="welcome-project-grid" x-show="$store.welcomeStore.welcomeProjects.length > 0">
+                            <template x-for="project in $store.welcomeStore.welcomeProjects" :key="project.name">
+                                <button type="button"
+                                        class="welcome-project-card"
+                                        @click="$store.welcomeStore.startProject(project.name)"
+                                        :disabled="$store.welcomeStore.isProjectLaunchDisabled(project.name)">
+                                    <div class="welcome-project-card-header">
+                                        <span class="welcome-project-swatch"
+                                              :style="project.color ? { backgroundColor: project.color } : { backgroundColor: 'var(--color-border)' }"></span>
+                                        <span class="welcome-project-name" x-text="project.title"></span>
+                                    </div>
+                                    <p class="welcome-project-summary"
+                                       x-text="project.summary || 'Start a fresh project-scoped chat with this repository context loaded.'"></p>
+                                    <span class="welcome-project-cta"
+                                          x-text="$store.welcomeStore.projectLaunchInFlight === project.name ? 'Starting...' : 'Start in project'"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="welcome-actions">
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('new-chat')">
+                            <span class="material-symbols-outlined welcome-action-icon">add_circle</span>
+                            <h3 class="welcome-action-title">New Chat</h3>
+                        </div>
+
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('projects')">
+                            <span class="material-symbols-outlined welcome-action-icon">folder</span>
+                            <h3 class="welcome-action-title">Projects</h3>
+                        </div>
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('memory')">
+                            <span class="material-symbols-outlined welcome-action-icon">memory</span>
+                            <h3 class="welcome-action-title">Memory</h3>
+                        </div>
+
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('scheduler')">
+                            <span class="material-symbols-outlined welcome-action-icon">schedule</span>
+                            <h3 class="welcome-action-title">Scheduler</h3>
+                        </div>
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('settings')">
+                            <span class="material-symbols-outlined welcome-action-icon">settings</span>
+                            <h3 class="welcome-action-title">Settings</h3>
+                        </div>
+
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('files')">
+                            <span class="material-symbols-outlined welcome-action-icon">folder_open</span>
+                            <h3 class="welcome-action-title">Files</h3>
+                        </div>
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('website')">
+                            <span class="material-symbols-outlined welcome-action-icon">language</span>
+                            <h3 class="welcome-action-title">Visit Website</h3>
+                        </div>
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('github')">
+                            <span class="material-symbols-outlined welcome-action-icon">code</span>
+                            <h3 class="welcome-action-title">Visit GitHub</h3>
+                        </div>
+                    </div>
+
+                    <div class="welcome-actions-footer">
+                        <button type="button"
+                                class="welcome-refresh-button"
+                                @click="$store.welcomeStore.refreshBanners(true)"
+                                :disabled="$store.welcomeStore.bannersLoading"
+                                title="Refresh banners">
+                            <span class="material-symbols-outlined" :class="{ 'welcome-spin': $store.welcomeStore.bannersLoading }">refresh</span>
+                        </button>
+
+                        <button type="button"
+                                class="welcome-refresh-button"
+                                @click="$store.welcomeStore.undismissBanners()"
+                                x-show="$store.welcomeStore.hasDismissedBanners"
+                                :disabled="$store.welcomeStore.bannersLoading"
+                                title="Undismiss all banners">
+                            <span class="material-symbols-outlined">undo</span>
+                        </button>
+                    </div>
+
+                    <div class="welcome-banners" x-show="$store.welcomeStore.banners && $store.welcomeStore.banners.length > 0">
+                        <template x-for="banner in $store.welcomeStore.sortedBanners" :key="banner.id">
+                            <div class="welcome-banner" :class="$store.welcomeStore.getBannerClass(banner.type)">
+                                <div class="welcome-banner-icon">
+                                    <span class="material-symbols-outlined" x-text="$store.welcomeStore.getBannerIcon(banner.type)"></span>
+                                </div>
+
+                                <div class="welcome-banner-content">
+                                    <div class="welcome-banner-title" x-text="banner.title"></div>
+                                    <div class="welcome-banner-html" x-html="banner.html"></div>
+                                </div>
+
+                                <button class="welcome-banner-dismiss"
+                                        x-show="banner.dismissible !== false"
+                                        @click.stop="$store.welcomeStore.dismissBanner(banner.id)"
+                                        title="Dismiss">
+                                    <span class="material-symbols-outlined">close</span>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <style>
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3%;
+            text-align: center;
+            background: var(--color-background);
+            color: var(--color-text);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("./public/darkSymbol.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 80% auto;
+            opacity: 0.07;
+            pointer-events: none;
+        }
+
+        .light-mode .welcome-container::before {
+            filter: invert(0.55);
+            opacity: 0.06;
+        }
+
+        .dark-mode .welcome-container::before {
+            filter: invert(0.85);
+            opacity: 0.08;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .welcome-projects-panel {
+            width: 100%;
+            max-width: 960px;
+            padding: 1rem 1.1rem 1.2rem;
+            background: color-mix(in srgb, var(--color-panel) 88%, transparent);
+            border: 1px solid var(--color-border);
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+        }
+
+        .welcome-section-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-section-kicker {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.72rem;
+            color: var(--color-secondary);
+            margin-bottom: 0.35rem;
+        }
+
+        .welcome-section-title {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .welcome-section-copy {
+            margin: 0.4rem 0 0;
+            color: var(--color-secondary);
+            max-width: 42rem;
+            line-height: 1.5;
+        }
+
+        .welcome-project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.9rem;
+        }
+
+        .welcome-project-card {
+            border: 1px solid var(--color-border);
+            background: linear-gradient(160deg, color-mix(in srgb, var(--color-panel) 92%, transparent), color-mix(in srgb, var(--color-message-bg) 72%, transparent));
+            border-radius: 16px;
+            padding: 0.95rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+            min-height: 150px;
+        }
+
+        .welcome-project-card:hover {
+            transform: translateY(-1px);
+            border-color: var(--color-primary);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+        }
+
+        .welcome-project-card:disabled {
+            opacity: 0.7;
+            cursor: default;
+            transform: none;
+        }
+
+        .welcome-project-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .welcome-project-swatch {
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 999px;
+            flex: 0 0 auto;
+        }
+
+        .welcome-project-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .welcome-project-summary {
+            margin: 0;
+            color: var(--color-secondary);
+            line-height: 1.45;
+            flex: 1 1 auto;
+        }
+
+        .welcome-project-cta {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-highlight-dark);
+        }
+
+        .welcome-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 640px;
+            width: 100%;
+            margin: 0.5rem 0 0;
+        }
+
+        .welcome-actions-footer {
+            max-width: 640px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            margin-top: -0.25rem;
+        }
+
+        .welcome-refresh-button {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            color: var(--color-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .welcome-refresh-button:hover {
+            border-color: var(--color-primary);
+            background: var(--color-message-bg);
+            color: var(--color-text);
+        }
+
+        .welcome-refresh-button:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .welcome-refresh-button .material-symbols-outlined {
+            font-size: 1.25rem;
+        }
+
+        .welcome-spin {
+            animation: welcome-spin 0.9s linear infinite;
+        }
+
+        @keyframes welcome-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-action-card {
+            background: var(--color-panel);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 0.6rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            aspect-ratio: 1 / 1;
+        }
+
+        .welcome-action-card:hover {
+            border-color: var(--color-primary);
+            background: var(--color-message-bg);
+        }
+
+        .welcome-action-icon {
+            font-size: 2.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--color-highlight-dark);
+        }
+
+        .welcome-action-title {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .welcome-banners {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 680px;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .welcome-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--color-panel);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            text-align: left;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .welcome-banner:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .welcome-banner.banner-info {
+            border-left: 4px solid #2196F3;
+        }
+
+        .welcome-banner.banner-warning {
+            border-left: 4px solid #FF9800;
+        }
+
+        .welcome-banner.banner-error {
+            border-left: 4px solid #F44336;
+        }
+
+        .welcome-banner-icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .welcome-banner-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .welcome-banner-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--color-text);
+        }
+
+        .welcome-banner-html {
+            color: var(--color-secondary);
+            line-height: 1.45;
+        }
+
+        .welcome-banner-dismiss {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .welcome-banner-dismiss:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--color-text);
+        }
+
+        @media (max-width: 920px) {
+            .welcome-project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-actions {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: 100%;
+            }
+
+            .welcome-projects-panel {
+                padding: 0.95rem;
+            }
+        }
+    </style>
+</body>
+
+</html>
