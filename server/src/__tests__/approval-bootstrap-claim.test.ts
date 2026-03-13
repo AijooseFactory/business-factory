@@ -111,9 +111,10 @@ describe("approval bootstrap claim flow", () => {
 
   it("claims the initial approval API key exactly once", async () => {
     const claimSecret = "pcp_claim_1234567890abcdef";
+    const futureExpiry = new Date(Date.now() + 60 * 60 * 1000);
     const approval = createApproval({
       claimSecretHash: hashToken(claimSecret),
-      claimSecretExpiresAt: new Date("2026-03-12T21:00:00.000Z"),
+      claimSecretExpiresAt: futureExpiry,
       claimSecretConsumedAt: null,
     });
     const consumed = createApproval({

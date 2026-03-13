@@ -2706,6 +2706,23 @@ export function heartbeatService(db: Db) {
 
     reapOrphanedRuns,
 
+    resumeQueuedRuns: async () => {
+      const queuedAgentRows = await db
+        .select({ agentId: heartbeatRuns.agentId })
+        .from(heartbeatRuns)
+        .where(eq(heartbeatRuns.status, "queued"));
+
+      const agentIds = Array.from(new Set(queuedAgentRows.map((row) => row.agentId)));
+      for (const agentId of agentIds) {
+        await startNextQueuedRunForAgent(agentId);
+      }
+
+      return {
+        resumedAgents: agentIds.length,
+        agentIds,
+      };
+    },
+
     tickTimers: async (now = new Date()) => {
       const allAgents = await db.select().from(agents);
       let checked = 0;

@@ -1,9 +1,9 @@
 import path from "node:path";
-import fs from "node:fs";
 import pino from "pino";
 import { pinoHttp } from "pino-http";
 import { readConfigFile } from "../config-file.js";
 import { resolveDefaultLogsDir, resolveHomeAwarePath } from "../home-paths.js";
+import { ensureWritableLogDir } from "../log-dir.js";
 
 function resolveServerLogDir(): string {
   const envOverride = process.env.PAPERCLIP_LOG_DIR?.trim();
@@ -15,8 +15,7 @@ function resolveServerLogDir(): string {
   return resolveDefaultLogsDir();
 }
 
-const logDir = resolveServerLogDir();
-fs.mkdirSync(logDir, { recursive: true });
+const logDir = ensureWritableLogDir(resolveServerLogDir());
 
 const logFile = path.join(logDir, "server.log");
 
