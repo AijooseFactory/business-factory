@@ -219,4 +219,4 @@ We welcome contributions. See the [contributing guide](CONTRIBUTING.md) for deta
 
 ## License
 
-MIT &copy; 2026 Ai joose Factory, LLC.
+MIT
