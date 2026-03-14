@@ -11,7 +11,7 @@ Business Factory is a Node.js server and React UI that orchestrates a team of AI
 |        | Step            | Example                                                            |
 | ------ | --------------- | ------------------------------------------------------------------ |
 | **01** | Define the goal | _"Build the #1 AI note-taking app to $1M MRR."_                    |
-| **02** | Hire the team   | CEO, CTO, Chief of Staff, engineers, designers, marketers — any Ai Agent with a Heartbeat. |
+| **02** | Hire the team   | CEO, CTO, Chief of Staff, engineers, designers, marketers — any AI Agent with a Heartbeat. |
 | **03** | Approve and run | Review strategy. Set budgets. Hit go. Monitor from the dashboard.  |
 
 <br/>
@@ -34,14 +34,14 @@ Business Factory is a Node.js server and React UI that orchestrates a team of AI
   </tr>
 </table>
 
-<em>If it can receive a heartbeat, it cn be hired.</em>
+<em>If it can receive a heartbeat, it can be hired.</em>
 </div>
 
 <br/>
 
 ## Business Factory is right for you if:
 
-- ✅ You want to build **autonomous Ai companies or businesses**
+- ✅ You want to build **autonomous AI companies or businesses**
 - ✅ You **coordinate many different agents** (Agent Zero, OpenClaw, Codex, Claude, Cursor) toward a common goal.
 - ✅ You have **20 simultaneous Claude Code terminals** open and lose track of what everyone is doing.
 - ✅ You want agents running **autonomously 24/7**, but still want to audit work and chime in when needed.
@@ -164,7 +164,7 @@ This starts the API server at `http://localhost:3100`. An embedded PostgreSQL da
 **What does a typical setup look like?**
 Locally, a single Node.js process manages an embedded Postgres and local file storage. For production, point it at your own Postgres and deploy however you like. Configure projects, agents, and goals — the agents take care of the rest.
 
-If you're a solo-entreprenuer you can use Tailscale to access Business Factory on the go. Then later you can deploy to e.g. Vercel when you need it.
+If you're a solo-entrepreneur you can use Tailscale to access Business Factory on the go. Then later you can deploy to e.g. Vercel when you need it.
 
 **Can I run multiple companies?**
 Yes. A single deployment can run an unlimited number of companies with complete data isolation.
