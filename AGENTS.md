@@ -2,10 +2,84 @@
 
 Guidance for human and AI contributors working in this repository.
 
+---
+
+## CURRENT STATUS — READ THIS FIRST
+
+**Branch:** `rebrand/business-factory`
+
+**Active initiative:** Full rebranding from "Paperclip" to "Business Factory"
+- Design spec: `docs/superpowers/specs/2026-03-13-business-factory-rebranding-design.md`
+- Implementation plan: `docs/superpowers/plans/2026-03-13-business-factory-rebranding.md`
+
+**Layer progress:**
+
+| Layer | Scope | Status | Commit |
+|-------|-------|--------|--------|
+| 1 — Package names & type aliases | `@paperclipai/*` → `@business-factory/*`, type renames with deprecated aliases | ✅ Done | `1c16aa5` |
+| 2 — Env vars & runtime wiring | `PAPERCLIP_*` → `BUSINESS_FACTORY_*` reads with `??` fallbacks, dual injection into agents, JWT dual-issuer compat, HTML markers sync | ⏳ Next | — |
+| 3 — Config paths, Docker, protocol markers | `.paperclip/` → `.business-factory/` fallback, Zod defaults, Docker image names, RESULT_JSON marker (TS + Python coordinated), Vite plugin rename, UI strings | ⬜ Pending | — |
+| 4 — Skills & symlinks | Rename `skills/paperclip/` → `skills/business-factory/`, update SKILL.md, recreate `.claude/skills/business-factory` symlink | ⬜ Pending | — |
+| 5 — Docs, README, CLI banners | README.md, doc/ directory strings, CLI banners, server instructional strings, final audit | ⬜ Pending | — |
+
+**Critical backward-compat rules (do not break these):**
+- Server reads env vars as: `process.env.BUSINESS_FACTORY_X ?? process.env.PAPERCLIP_X`
+- Agent processes receive BOTH `BUSINESS_FACTORY_*` and `PAPERCLIP_*` vars (dual injection)
+- JWT valid issuers: `Set(["paperclip", "business-factory", config.issuer])`
+- Config path: search `.business-factory/` first, fall back to `.paperclip/`
+- Deprecated TypeScript aliases (`PaperclipConfig`, `buildPaperclipEnv`, etc.) must remain exported
+
+**Do not merge this branch to main until all 5 layers are complete and:**
+```sh
+pnpm -r typecheck   # must pass
+pnpm test:run       # must pass (366+ tests)
+pnpm build          # must pass
+```
+
+---
+
+## AI DEVELOPER ORIENTATION
+
+This project is worked on by multiple AI agents. Each agent that picks up work MUST:
+
+1. Check the Layer progress table above to know what is done vs. pending
+2. Read the current design spec and plan files before making any changes
+3. Work only on `rebrand/business-factory` branch — NEVER commit directly to `main`
+4. After completing a layer, update the Layer progress table in this file
+
+### Agent-specific notes
+
+**Claude Code (claude-code):**
+- Superpowers skills are available via the `Skill` tool — use them
+- For Layer execution: use `superpowers:subagent-driven-development`
+- Typecheck with `pnpm -r typecheck` after every significant change
+- User git identity: `george@aijoosefactory.com` / `George`
+
+**Codex (OpenAI):**
+- No interactive terminal — write full shell commands in script blocks
+- Read the full plan (`docs/superpowers/plans/2026-03-13-business-factory-rebranding.md`) for exact commands per task
+- Use `pnpm -r typecheck && pnpm test:run` to verify work before committing
+
+**Antigravity:**
+- Follow the same layer sequencing; layers are NOT parallelizable (each builds on the previous)
+- All file renames must happen before content patches in the same layer
+
+**Agent Zero:**
+- The Python integrations live in `integrations/agent-zero/` and must be coordinated with TypeScript changes in Layer 3 (RESULT_JSON protocol marker)
+- Do not change Python files independently of the TypeScript side
+
+**Openclaw:**
+- This is a pnpm workspace monorepo — run `pnpm install` from repo root after any package.json changes
+- After any `node_modules` clean, run `find . -name "node_modules" -prune -exec rm -rf {} + && pnpm install`
+
+---
+
 ## 1. Purpose
 
-Paperclip is a control plane for AI-agent companies.
+Business Factory is a control plane for AI-agent companies.
 The current implementation target is V1 and is defined in `doc/SPEC-implementation.md`.
+
+> **Origin note:** Business Factory is a rebrand of the Paperclip open-source project. During the rebranding period (branch `rebrand/business-factory`), both `BUSINESS_FACTORY_*` and `PAPERCLIP_*` namespaces are active. Do not remove the `PAPERCLIP_*` compatibility layer — agents and integrations may still rely on it.
 
 ## 2. Read This First
 
@@ -26,7 +100,12 @@ Before making changes, read in this order:
 - `ui/`: React + Vite board UI
 - `packages/db/`: Drizzle schema, migrations, DB clients
 - `packages/shared/`: shared types, constants, validators, API path constants
+- `packages/adapter-utils/`: shared utilities for adapter packages
+- `packages/adapter-*/`: individual agent adapter packages
+- `skills/`: runtime skill directories (being renamed in Layer 4)
+- `integrations/`: third-party agent integration files (Agent Zero, etc.)
 - `doc/`: operational and product docs
+- `docs/superpowers/`: design specs and implementation plans
 
 ## 4. Dev Setup (Auto DB)
 
@@ -79,7 +158,7 @@ If you change schema/API behavior, update all impacted layers:
 Prefer additive updates. Keep `doc/SPEC.md` and `doc/SPEC-implementation.md` aligned.
 
 5. Keep plan docs dated and centralized.
-New plan documents belong in `doc/plans/` and should use `YYYY-MM-DD-slug.md` filenames.
+New plan documents belong in `docs/superpowers/plans/` and should use `YYYY-MM-DD-slug.md` filenames.
 
 ## 6. Database Change Workflow
 
