@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { AdapterExecutionContext, AdapterExecutionResult } from "@paperclipai/adapter-utils";
+import type { AdapterExecutionContext, AdapterExecutionResult } from "@business-factory/adapter-utils";
 import {
   asString,
   asNumber,
@@ -19,7 +19,7 @@ import {
   renderTemplate,
   joinPromptSections,
   runChildProcess,
-} from "@paperclipai/adapter-utils/server-utils";
+} from "@business-factory/adapter-utils/server-utils";
 import { parseCodexJsonl, isCodexUnknownSessionError } from "./parse.js";
 import { pathExists, prepareWorktreeCodexHome, resolveCodexHomeDir } from "./codex-home.js";
 

@@ -43,7 +43,7 @@ export async function loadPlugins(cwd = process.cwd()): Promise<void> {
   for (const pluginPkg of plugins) {
     try {
       // Import the server entrypoint of the plugin.
-      // E.g. "@aijoosefactory/paperclip-plugin-agent-zero/server"
+      // E.g. "@business-factory/adapter-agent-zero/server"
       const modulePath = pluginPkg.endsWith("/server") ? pluginPkg : `${pluginPkg}/server`;
       const mod = await import(modulePath);
       const adapter = findServerAdapterExports(mod);

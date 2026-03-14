@@ -1,4 +1,4 @@
-import { AGENT_ROLE_LABELS, type Agent, type HeartbeatRun } from "@paperclipai/shared";
+import { AGENT_ROLE_LABELS, type Agent, type HeartbeatRun } from "@business-factory/shared";
 
 const customRoleLabels: Record<string, string> = {
   chief_of_staff: "Chief of Staff",

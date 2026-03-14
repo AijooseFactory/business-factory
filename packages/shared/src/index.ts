@@ -255,6 +255,7 @@ export {
 } from "./project-mentions.js";
 
 export {
+  businessFactoryConfigSchema,
   paperclipConfigSchema,
   configMetaSchema,
   llmConfigSchema,
@@ -268,6 +269,7 @@ export {
   storageLocalDiskConfigSchema,
   storageS3ConfigSchema,
   secretsLocalEncryptedConfigSchema,
+  type BusinessFactoryConfig,
   type PaperclipConfig,
   type LlmConfig,
   type DatabaseBackupConfig,

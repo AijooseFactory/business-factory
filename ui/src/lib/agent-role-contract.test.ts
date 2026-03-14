@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 import { describe, expect, it } from "vitest";
-import { AGENT_ROLE_LABELS, AGENT_ROLES } from "@paperclipai/shared";
+import { AGENT_ROLE_LABELS, AGENT_ROLES } from "@business-factory/shared";
 
 describe("agent role contract", () => {
   it("includes chief_of_staff in the shared role model", () => {

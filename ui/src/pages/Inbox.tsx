@@ -41,7 +41,7 @@ import {
 } from "lucide-react";
 import { Identity } from "../components/Identity";
 import { PageTabBar } from "../components/PageTabBar";
-import type { Agent, HeartbeatRun, Issue, JoinRequest } from "@paperclipai/shared";
+import type { Agent, HeartbeatRun, Issue, JoinRequest } from "@business-factory/shared";
 import {
   ACTIONABLE_APPROVAL_STATUSES,
   getLatestFailedRunsByAgent,

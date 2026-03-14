@@ -3,7 +3,7 @@ import type {
   ExecutionWorkspaceStrategy,
   IssueExecutionWorkspaceSettings,
   ProjectExecutionWorkspacePolicy,
-} from "@paperclipai/shared";
+} from "@business-factory/shared";
 import { asString, parseObject } from "../adapters/utils.js";
 
 type ParsedExecutionWorkspaceMode = Exclude<ExecutionWorkspaceMode, "inherit">;

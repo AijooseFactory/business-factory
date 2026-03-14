@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 import { describe, expect, it } from "vitest";
-import type { Agent } from "@paperclipai/shared";
+import type { Agent } from "@business-factory/shared";
 import { getAgentManagerForCreation } from "./agent-management";
 
 function makeAgent(overrides: Partial<Agent> = {}): Agent {

@@ -1,25 +1,21 @@
 {
-  "name": "paperclipai",
+  "name": "business-factory",
   "version": "0.3.0",
   "description": "Paperclip CLI — orchestrate AI agent teams to run a business",
   "type": "module",
   "bin": {
-    "paperclipai": "./dist/index.js"
+    "business-factory": "./dist/index.js"
   },
   "keywords": [
-    "paperclip",
-    "ai",
-    "agents",
-    "orchestration",
-    "cli"
+    "business-factory"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/paperclipai/paperclip.git",
+    "url": "https://github.com/AijooseFactory/business-factory.git",
     "directory": "cli"
   },
-  "homepage": "https://github.com/paperclipai/paperclip",
+  "homepage": "https://github.com/AijooseFactory/business-factory",
   "files": [
     "dist"
   ],
@@ -34,17 +30,17 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.10.0",
-    "@paperclipai/adapter-claude-local": "workspace:*",
-    "@paperclipai/adapter-codex-local": "workspace:*",
-    "@paperclipai/adapter-cursor-local": "workspace:*",
-    "@paperclipai/adapter-gemini-local": "workspace:*",
-    "@paperclipai/adapter-opencode-local": "workspace:*",
-    "@paperclipai/adapter-pi-local": "workspace:*",
-    "@paperclipai/adapter-openclaw-gateway": "workspace:*",
-    "@paperclipai/adapter-utils": "workspace:*",
-    "@paperclipai/db": "workspace:*",
-    "@paperclipai/server": "workspace:*",
-    "@paperclipai/shared": "workspace:*",
+    "@business-factory/adapter-claude-local": "workspace:*",
+    "@business-factory/adapter-codex-local": "workspace:*",
+    "@business-factory/adapter-cursor-local": "workspace:*",
+    "@business-factory/adapter-gemini-local": "workspace:*",
+    "@business-factory/adapter-opencode-local": "workspace:*",
+    "@business-factory/adapter-pi-local": "workspace:*",
+    "@business-factory/adapter-openclaw-gateway": "workspace:*",
+    "@business-factory/adapter-utils": "workspace:*",
+    "@business-factory/db": "workspace:*",
+    "@business-factory/server": "workspace:*",
+    "@business-factory/shared": "workspace:*",
     "drizzle-orm": "0.38.4",
     "dotenv": "^17.0.1",
     "commander": "^13.1.0",

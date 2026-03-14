@@ -1,8 +1,8 @@
 import type { UIAdapterModule } from "../types";
-import { parseCodexStdoutLine } from "@paperclipai/adapter-codex-local/ui";
+import { parseCodexStdoutLine } from "@business-factory/adapter-codex-local/ui";
 import { CodexLocalConfigFields } from "./config-fields";
-import { buildCodexLocalConfig } from "@paperclipai/adapter-codex-local/ui";
-import { DEFAULT_CODEX_LOCAL_MODEL, DEFAULT_CODEX_LOCAL_BYPASS_APPROVALS_AND_SANDBOX } from "@paperclipai/adapter-codex-local";
+import { buildCodexLocalConfig } from "@business-factory/adapter-codex-local/ui";
+import { DEFAULT_CODEX_LOCAL_MODEL, DEFAULT_CODEX_LOCAL_BYPASS_APPROVALS_AND_SANDBOX } from "@business-factory/adapter-codex-local";
 
 export const codexLocalUIAdapter: UIAdapterModule = {
   type: "codex_local",

@@ -1,4 +1,4 @@
-import type { DeploymentExposure, DeploymentMode } from "@paperclipai/shared";
+import type { DeploymentExposure, DeploymentMode } from "@business-factory/shared";
 import { resolvePrivateHostnameAllowSet } from "../middleware/private-hostname-guard.js";
 
 function asNonEmptyString(value: unknown): string | null {

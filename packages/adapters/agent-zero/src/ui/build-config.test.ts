@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { CreateConfigValues } from "@paperclipai/adapter-utils";
+import type { CreateConfigValues } from "@business-factory/adapter-utils";
 import { buildAgentZeroConfig } from "./build-config.js";
 
 describe("buildAgentZeroConfig", () => {

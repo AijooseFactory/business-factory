@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ONBOARDING_AGENT_PERSONA_BILLING_CODE,
   type AdapterEnvironmentTestResult
-} from "@paperclipai/shared";
+} from "@business-factory/shared";
 import { useDialog } from "../context/DialogContext";
 import { useCompany } from "../context/CompanyContext";
 import { companiesApi } from "../api/companies";
@@ -26,9 +26,9 @@ import { defaultCreateValues } from "./agent-config-defaults";
 import {
   DEFAULT_CODEX_LOCAL_BYPASS_APPROVALS_AND_SANDBOX,
   DEFAULT_CODEX_LOCAL_MODEL
-} from "@paperclipai/adapter-codex-local";
-import { DEFAULT_CURSOR_LOCAL_MODEL } from "@paperclipai/adapter-cursor-local";
-import { DEFAULT_GEMINI_LOCAL_MODEL } from "@paperclipai/adapter-gemini-local";
+} from "@business-factory/adapter-codex-local";
+import { DEFAULT_CURSOR_LOCAL_MODEL } from "@business-factory/adapter-cursor-local";
+import { DEFAULT_GEMINI_LOCAL_MODEL } from "@business-factory/adapter-gemini-local";
 import { AsciiArtAnimation } from "./AsciiArtAnimation";
 import { ChoosePathButton } from "./PathInstructionsModal";
 import { HintIcon } from "./agent-config-primitives";

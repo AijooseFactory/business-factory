@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Db } from "@paperclipai/db";
+import type { Db } from "@business-factory/db";
 import {
   addApprovalCommentSchema,
   claimApprovalApiKeySchema,
@@ -7,7 +7,7 @@ import {
   requestApprovalRevisionSchema,
   resolveApprovalSchema,
   resubmitApprovalSchema,
-} from "@paperclipai/shared";
+} from "@business-factory/shared";
 import { validate } from "../middleware/validate.js";
 import { logger } from "../middleware/logger.js";
 import {

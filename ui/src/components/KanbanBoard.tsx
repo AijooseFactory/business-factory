@@ -21,7 +21,7 @@ import { getAgentInlineLabel } from "../lib/agent-presentation";
 import { StatusIcon } from "./StatusIcon";
 import { PriorityIcon } from "./PriorityIcon";
 import { Identity } from "./Identity";
-import type { Agent as SharedAgent, Issue } from "@paperclipai/shared";
+import type { Agent as SharedAgent, Issue } from "@business-factory/shared";
 
 const boardStatuses = [
   "backlog",

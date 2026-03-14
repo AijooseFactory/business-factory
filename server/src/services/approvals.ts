@@ -1,7 +1,7 @@
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { and, asc, eq, inArray, isNull } from "drizzle-orm";
-import type { Db } from "@paperclipai/db";
-import { approvalComments, agentApiKeys, approvals } from "@paperclipai/db";
+import type { Db } from "@business-factory/db";
+import { approvalComments, agentApiKeys, approvals } from "@business-factory/db";
 import { badRequest, conflict, forbidden, notFound, unprocessable } from "../errors.js";
 import { agentService } from "./agents.js";
 import { notifyHireApproved } from "./hire-hook.js";

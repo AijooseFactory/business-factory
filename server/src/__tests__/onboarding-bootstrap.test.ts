@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ONBOARDING_AGENT_PERSONA_BILLING_CODE } from "@paperclipai/shared";
+import { ONBOARDING_AGENT_PERSONA_BILLING_CODE } from "@business-factory/shared";
 import { isOnboardingBootstrapIssueForAgent } from "../services/onboarding-bootstrap.ts";
 
 function makeIssue(

@@ -95,7 +95,7 @@ export const secretsConfigSchema = z.object({
   }),
 });
 
-export const paperclipConfigSchema = z
+export const businessFactoryConfigSchema = z
   .object({
     $meta: configMetaSchema,
     llm: llmConfigSchema.optional(),
@@ -163,7 +163,7 @@ export const paperclipConfigSchema = z
     }
   });
 
-export type PaperclipConfig = z.infer<typeof paperclipConfigSchema>;
+export type BusinessFactoryConfig = z.infer<typeof businessFactoryConfigSchema>;
 export type LlmConfig = z.infer<typeof llmConfigSchema>;
 export type DatabaseConfig = z.infer<typeof databaseConfigSchema>;
 export type LoggingConfig = z.infer<typeof loggingConfigSchema>;
@@ -176,3 +176,8 @@ export type SecretsLocalEncryptedConfig = z.infer<typeof secretsLocalEncryptedCo
 export type AuthConfig = z.infer<typeof authConfigSchema>;
 export type ConfigMeta = z.infer<typeof configMetaSchema>;
 export type DatabaseBackupConfig = z.infer<typeof databaseBackupConfigSchema>;
+
+/** @deprecated Use businessFactoryConfigSchema */
+export const paperclipConfigSchema = businessFactoryConfigSchema;
+/** @deprecated Use BusinessFactoryConfig */
+export type PaperclipConfig = BusinessFactoryConfig;

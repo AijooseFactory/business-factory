@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { AdapterExecutionContext, AdapterExecutionResult } from "@paperclipai/adapter-utils";
+import type { AdapterExecutionContext, AdapterExecutionResult } from "@business-factory/adapter-utils";
 import {
   asString,
   asNumber,
@@ -19,7 +19,7 @@ import {
   renderTemplate,
   joinPromptSections,
   runChildProcess,
-} from "@paperclipai/adapter-utils/server-utils";
+} from "@business-factory/adapter-utils/server-utils";
 import { DEFAULT_CURSOR_LOCAL_MODEL } from "../index.js";
 import { parseCursorJsonl, isCursorUnknownSessionError } from "./parse.js";
 import { normalizeCursorStreamLine } from "../shared/stream.js";

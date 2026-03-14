@@ -1,4 +1,4 @@
-import type { Agent } from "@paperclipai/shared";
+import type { Agent } from "@business-factory/shared";
 
 export function getAgentManagerForCreation(agents: Agent[]): Agent | null {
   return (

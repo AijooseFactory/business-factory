@@ -37,10 +37,12 @@ const PAPERCLIP_SKILL_ROOT_RELATIVE_CANDIDATES = [
   "../../../../../skills",
 ];
 
-export interface PaperclipSkillEntry {
+export interface BusinessFactorySkillEntry {
   name: string;
   source: string;
 }
+/** @deprecated Use BusinessFactorySkillEntry */
+export type PaperclipSkillEntry = BusinessFactorySkillEntry;
 
 function normalizePathSlashes(value: string): string {
   return value.replaceAll("\\", "/");

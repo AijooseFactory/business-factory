@@ -1,6 +1,6 @@
 import { and, asc, desc, eq, inArray } from "drizzle-orm";
-import type { Db } from "@paperclipai/db";
-import { projects, projectGoals, goals, projectWorkspaces, workspaceRuntimeServices } from "@paperclipai/db";
+import type { Db } from "@business-factory/db";
+import { projects, projectGoals, goals, projectWorkspaces, workspaceRuntimeServices } from "@business-factory/db";
 import {
   PROJECT_COLORS,
   deriveProjectUrlKey,
@@ -10,7 +10,7 @@ import {
   type ProjectGoalRef,
   type ProjectWorkspace,
   type WorkspaceRuntimeService,
-} from "@paperclipai/shared";
+} from "@business-factory/shared";
 import { listWorkspaceRuntimeServicesForProjectWorkspaces } from "./workspace-runtime.js";
 import { parseProjectExecutionWorkspacePolicy } from "./execution-workspace-policy.js";
 import { normalizeSharedProjectPath } from "./shared-project-paths.js";

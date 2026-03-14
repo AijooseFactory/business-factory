@@ -24,7 +24,7 @@ import { Bot, CircleDot, DollarSign, ShieldCheck, LayoutDashboard } from "lucide
 import { ActiveAgentsPanel } from "../components/ActiveAgentsPanel";
 import { ChartCard, RunActivityChart, PriorityChart, IssueStatusChart, SuccessRateChart } from "../components/ActivityCharts";
 import { PageSkeleton } from "../components/PageSkeleton";
-import type { Agent, Issue } from "@paperclipai/shared";
+import type { Agent, Issue } from "@business-factory/shared";
 
 function getRecentIssues(issues: Issue[]): Issue[] {
   return [...issues]

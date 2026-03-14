@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 import { describe, expect, it } from "vitest";
-import type { Agent, HeartbeatRun } from "@paperclipai/shared";
+import type { Agent, HeartbeatRun } from "@business-factory/shared";
 import {
   buildLatestRunStatusByAgent,
   getAgentInlineLabel,

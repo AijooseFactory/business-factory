@@ -1,4 +1,4 @@
-import type { AdapterExecutionContext, AdapterExecutionResult } from "@paperclipai/adapter-utils";
+import type { AdapterExecutionContext, AdapterExecutionResult } from "@business-factory/adapter-utils";
 import {
   asString,
   asNumber,

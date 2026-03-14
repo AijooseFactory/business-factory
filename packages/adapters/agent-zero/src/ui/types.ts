@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import type { CreateConfigValues, StdoutLineParser } from "@paperclipai/adapter-utils";
-import type { Agent } from "@paperclipai/shared";
+import type { CreateConfigValues, StdoutLineParser } from "@business-factory/adapter-utils";
+import type { Agent } from "@business-factory/shared";
 
 export interface AdapterCapabilities {
   isLocal?: boolean;

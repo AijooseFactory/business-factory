@@ -29,42 +29,42 @@ importers:
 
   cli:
     dependencies:
+      '@business-factory/adapter-claude-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/claude-local
+      '@business-factory/adapter-codex-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/codex-local
+      '@business-factory/adapter-cursor-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/cursor-local
+      '@business-factory/adapter-gemini-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/gemini-local
+      '@business-factory/adapter-openclaw-gateway':
+        specifier: workspace:*
+        version: link:../packages/adapters/openclaw-gateway
+      '@business-factory/adapter-opencode-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/opencode-local
+      '@business-factory/adapter-pi-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/pi-local
+      '@business-factory/adapter-utils':
+        specifier: workspace:*
+        version: link:../packages/adapter-utils
+      '@business-factory/db':
+        specifier: workspace:*
+        version: link:../packages/db
+      '@business-factory/server':
+        specifier: workspace:*
+        version: link:../server
+      '@business-factory/shared':
+        specifier: workspace:*
+        version: link:../packages/shared
       '@clack/prompts':
         specifier: ^0.10.0
         version: 0.10.1
-      '@paperclipai/adapter-claude-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/claude-local
-      '@paperclipai/adapter-codex-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/codex-local
-      '@paperclipai/adapter-cursor-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/cursor-local
-      '@paperclipai/adapter-gemini-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/gemini-local
-      '@paperclipai/adapter-openclaw-gateway':
-        specifier: workspace:*
-        version: link:../packages/adapters/openclaw-gateway
-      '@paperclipai/adapter-opencode-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/opencode-local
-      '@paperclipai/adapter-pi-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/pi-local
-      '@paperclipai/adapter-utils':
-        specifier: workspace:*
-        version: link:../packages/adapter-utils
-      '@paperclipai/db':
-        specifier: workspace:*
-        version: link:../packages/db
-      '@paperclipai/server':
-        specifier: workspace:*
-        version: link:../server
-      '@paperclipai/shared':
-        specifier: workspace:*
-        version: link:../packages/shared
       commander:
         specifier: ^13.1.0
         version: 13.1.0
@@ -102,10 +102,10 @@ importers:
 
   packages/adapters/agent-zero:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
-      '@paperclipai/shared':
+      '@business-factory/shared':
         specifier: workspace:*
         version: link:../../shared
       lucide-react:
@@ -130,7 +130,7 @@ importers:
 
   packages/adapters/claude-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -146,7 +146,7 @@ importers:
 
   packages/adapters/codex-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -162,7 +162,7 @@ importers:
 
   packages/adapters/cursor-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -178,7 +178,7 @@ importers:
 
   packages/adapters/gemini-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -194,7 +194,7 @@ importers:
 
   packages/adapters/openclaw-gateway:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -216,7 +216,7 @@ importers:
 
   packages/adapters/opencode-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -232,7 +232,7 @@ importers:
 
   packages/adapters/pi-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -248,7 +248,7 @@ importers:
 
   packages/db:
     dependencies:
-      '@paperclipai/shared':
+      '@business-factory/shared':
         specifier: workspace:*
         version: link:../shared
       drizzle-orm:
@@ -286,40 +286,40 @@ importers:
 
   server:
     dependencies:
-      '@aijoosefactory/paperclip-plugin-agent-zero':
-        specifier: workspace:*
-        version: link:../packages/adapters/agent-zero
       '@aws-sdk/client-s3':
         specifier: ^3.888.0
         version: 3.994.0
-      '@paperclipai/adapter-claude-local':
+      '@business-factory/adapter-agent-zero':
+        specifier: workspace:*
+        version: link:../packages/adapters/agent-zero
+      '@business-factory/adapter-claude-local':
         specifier: workspace:*
         version: link:../packages/adapters/claude-local
-      '@paperclipai/adapter-codex-local':
+      '@business-factory/adapter-codex-local':
         specifier: workspace:*
         version: link:../packages/adapters/codex-local
-      '@paperclipai/adapter-cursor-local':
+      '@business-factory/adapter-cursor-local':
         specifier: workspace:*
         version: link:../packages/adapters/cursor-local
-      '@paperclipai/adapter-gemini-local':
+      '@business-factory/adapter-gemini-local':
         specifier: workspace:*
         version: link:../packages/adapters/gemini-local
-      '@paperclipai/adapter-openclaw-gateway':
+      '@business-factory/adapter-openclaw-gateway':
         specifier: workspace:*
         version: link:../packages/adapters/openclaw-gateway
-      '@paperclipai/adapter-opencode-local':
+      '@business-factory/adapter-opencode-local':
         specifier: workspace:*
         version: link:../packages/adapters/opencode-local
-      '@paperclipai/adapter-pi-local':
+      '@business-factory/adapter-pi-local':
         specifier: workspace:*
         version: link:../packages/adapters/pi-local
-      '@paperclipai/adapter-utils':
+      '@business-factory/adapter-utils':
         specifier: workspace:*
         version: link:../packages/adapter-utils
-      '@paperclipai/db':
+      '@business-factory/db':
         specifier: workspace:*
         version: link:../packages/db
-      '@paperclipai/shared':
+      '@business-factory/shared':
         specifier: workspace:*
         version: link:../packages/shared
       better-auth:
@@ -401,9 +401,36 @@ importers:
 
   ui:
     dependencies:
-      '@aijoosefactory/paperclip-plugin-agent-zero':
+      '@business-factory/adapter-agent-zero':
         specifier: workspace:*
         version: link:../packages/adapters/agent-zero
+      '@business-factory/adapter-claude-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/claude-local
+      '@business-factory/adapter-codex-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/codex-local
+      '@business-factory/adapter-cursor-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/cursor-local
+      '@business-factory/adapter-gemini-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/gemini-local
+      '@business-factory/adapter-openclaw-gateway':
+        specifier: workspace:*
+        version: link:../packages/adapters/openclaw-gateway
+      '@business-factory/adapter-opencode-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/opencode-local
+      '@business-factory/adapter-pi-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/pi-local
+      '@business-factory/adapter-utils':
+        specifier: workspace:*
+        version: link:../packages/adapter-utils
+      '@business-factory/shared':
+        specifier: workspace:*
+        version: link:../packages/shared
       '@dnd-kit/core':
         specifier: ^6.3.1
         version: 6.3.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -416,33 +443,6 @@ importers:
       '@mdxeditor/editor':
         specifier: ^3.52.4
         version: 3.52.4(@codemirror/language@6.12.1)(@lezer/highlight@1.2.3)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(yjs@13.6.29)
-      '@paperclipai/adapter-claude-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/claude-local
-      '@paperclipai/adapter-codex-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/codex-local
-      '@paperclipai/adapter-cursor-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/cursor-local
-      '@paperclipai/adapter-gemini-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/gemini-local
-      '@paperclipai/adapter-openclaw-gateway':
-        specifier: workspace:*
-        version: link:../packages/adapters/openclaw-gateway
-      '@paperclipai/adapter-opencode-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/opencode-local
-      '@paperclipai/adapter-pi-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/pi-local
-      '@paperclipai/adapter-utils':
-        specifier: workspace:*
-        version: link:../packages/adapter-utils
-      '@paperclipai/shared':
-        specifier: workspace:*
-        version: link:../packages/shared
       '@radix-ui/react-slot':
         specifier: ^1.2.4
         version: 1.2.4(@types/react@19.2.14)(react@19.2.4)

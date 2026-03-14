@@ -1,8 +1,8 @@
 import { access, lstat, mkdir, readFile, readlink, readdir, realpath, symlink, unlink, writeFile } from "node:fs/promises";
 import { constants as fsConstants, watch } from "node:fs";
 import path from "node:path";
-import { agents, companies, projectWorkspaces } from "@paperclipai/db";
-import type { Db } from "@paperclipai/db";
+import { agents, companies, projectWorkspaces } from "@business-factory/db";
+import type { Db } from "@business-factory/db";
 import { and, asc, eq, ne } from "drizzle-orm";
 import { logger } from "../middleware/logger.js";
 import { agentService } from "./agents.js";

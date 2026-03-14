@@ -1,4 +1,4 @@
-import type { ServerAdapterModule } from "@paperclipai/adapter-utils";
+import type { ServerAdapterModule } from "@business-factory/adapter-utils";
 import { execute } from "./execute.js";
 import { testEnvironment } from "./test.js";
 

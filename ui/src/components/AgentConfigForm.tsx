@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AGENT_ADAPTER_TYPES } from "@paperclipai/shared";
+import { AGENT_ADAPTER_TYPES } from "@business-factory/shared";
 import type {
   Agent,
   AdapterEnvironmentTestResult,
   CompanySecret,
   EnvBinding,
-} from "@paperclipai/shared";
+} from "@business-factory/shared";
 import type { AdapterModel } from "../api/agents";
 import { agentsApi } from "../api/agents";
 import { secretsApi } from "../api/secrets";
@@ -42,10 +42,10 @@ import { OpenCodeLogoIcon } from "./OpenCodeLogoIcon";
 
 /* ---- Create mode values ---- */
 
-// Canonical type lives in @paperclipai/adapter-utils; re-exported here
+// Canonical type lives in @business-factory/adapter-utils; re-exported here
 // so existing imports from this file keep working.
-export type { CreateConfigValues } from "@paperclipai/adapter-utils";
-import type { CreateConfigValues } from "@paperclipai/adapter-utils";
+export type { CreateConfigValues } from "@business-factory/adapter-utils";
+import type { CreateConfigValues } from "@business-factory/adapter-utils";
 
 /* ---- Props ---- */
 

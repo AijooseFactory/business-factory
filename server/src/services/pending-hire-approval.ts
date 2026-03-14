@@ -1,4 +1,4 @@
-import { approvals, type Db } from "@paperclipai/db";
+import { approvals, type Db } from "@business-factory/db";
 import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { redactEventPayload } from "../redaction.js";
 

@@ -92,7 +92,7 @@ async function maybePreflightMigrations() {
   if (process.env.PAPERCLIP_MIGRATION_PROMPT === "never") return;
 
   const status = await runPnpm(
-    ["--filter", "@paperclipai/db", "exec", "tsx", "src/migration-status.ts", "--json"],
+    ["--filter", "@business-factory/db", "exec", "tsx", "src/migration-status.ts", "--json"],
     { env },
   );
   if (status.code !== 0) {
@@ -163,7 +163,7 @@ if (mode === "watch") {
 const serverScript = mode === "watch" ? "dev:watch" : "dev";
 const child = spawn(
   pnpmBin,
-  ["--filter", "@paperclipai/server", serverScript, ...forwardedArgs],
+  ["--filter", "@business-factory/server", serverScript, ...forwardedArgs],
   { stdio: "inherit", env, shell: process.platform === "win32" },
 );
 

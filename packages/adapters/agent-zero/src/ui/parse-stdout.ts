@@ -1,4 +1,4 @@
-import type { TranscriptEntry } from "@paperclipai/adapter-utils";
+import type { TranscriptEntry } from "@business-factory/adapter-utils";
 
 // Simple pass-through for any stdout logs from the adapter 
 export function parseAgentZeroStdoutLine(line: string, ts: string): TranscriptEntry[] {

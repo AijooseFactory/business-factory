@@ -1,4 +1,4 @@
-import { ONBOARDING_AGENT_PERSONA_BILLING_CODE } from "@paperclipai/shared";
+import { ONBOARDING_AGENT_PERSONA_BILLING_CODE } from "@business-factory/shared";
 
 const OPEN_ISSUE_STATUSES = new Set([
   "backlog",

@@ -1,8 +1,8 @@
 import { Router, type Request } from "express";
 import { generateKeyPairSync, randomUUID } from "node:crypto";
 import path from "node:path";
-import type { Db } from "@paperclipai/db";
-import { agents as agentsTable, companies, heartbeatRuns } from "@paperclipai/db";
+import type { Db } from "@business-factory/db";
+import { agents as agentsTable, companies, heartbeatRuns } from "@business-factory/db";
 import { and, desc, eq, inArray, not, sql } from "drizzle-orm";
 import {
   createAgentKeySchema,
@@ -15,7 +15,7 @@ import {
   updateAgentInstructionsPathSchema,
   wakeAgentSchema,
   updateAgentSchema,
-} from "@paperclipai/shared";
+} from "@business-factory/shared";
 import { validate } from "../middleware/validate.js";
 import {
   agentService,
@@ -32,14 +32,14 @@ import { assertBoard, assertCompanyAccess, getActorInfo } from "./authz.js";
 import { findServerAdapter, listAdapterModels } from "../adapters/index.js";
 import { redactEventPayload } from "../redaction.js";
 import { syncPendingHireApprovalForAgent } from "../services/pending-hire-approval.js";
-import { runClaudeLogin } from "@paperclipai/adapter-claude-local/server";
+import { runClaudeLogin } from "@business-factory/adapter-claude-local/server";
 import {
   DEFAULT_CODEX_LOCAL_BYPASS_APPROVALS_AND_SANDBOX,
   DEFAULT_CODEX_LOCAL_MODEL,
-} from "@paperclipai/adapter-codex-local";
-import { DEFAULT_CURSOR_LOCAL_MODEL } from "@paperclipai/adapter-cursor-local";
-import { DEFAULT_GEMINI_LOCAL_MODEL } from "@paperclipai/adapter-gemini-local";
-import { ensureOpenCodeModelConfiguredAndAvailable } from "@paperclipai/adapter-opencode-local/server";
+} from "@business-factory/adapter-codex-local";
+import { DEFAULT_CURSOR_LOCAL_MODEL } from "@business-factory/adapter-cursor-local";
+import { DEFAULT_GEMINI_LOCAL_MODEL } from "@business-factory/adapter-gemini-local";
+import { ensureOpenCodeModelConfiguredAndAvailable } from "@business-factory/adapter-opencode-local/server";
 import { loadConfig } from "../config.js";
 import { validateOpenClawGatewayAdapterConfig } from "../services/openclaw-gateway-config.js";
 

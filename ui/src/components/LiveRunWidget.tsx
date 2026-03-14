@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "@/lib/router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Agent } from "@paperclipai/shared";
+import type { Agent } from "@business-factory/shared";
 import { agentsApi } from "../api/agents";
 import { heartbeatsApi, type LiveRunForIssue } from "../api/heartbeats";
 import { getAgentInlineLabel } from "../lib/agent-presentation";

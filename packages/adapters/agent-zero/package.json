@@ -1,5 +1,5 @@
 {
-  "name": "@aijoosefactory/paperclip-plugin-agent-zero",
+  "name": "@business-factory/adapter-agent-zero",
   "version": "0.1.0",
   "type": "module",
   "exports": {
@@ -40,8 +40,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@paperclipai/adapter-utils": "workspace:*",
-    "@paperclipai/shared": "workspace:*",
+    "@business-factory/adapter-utils": "workspace:*",
+    "@business-factory/shared": "workspace:*",
     "zod": "^3.23.8",
     "lucide-react": "^0.428.0"
   },

@@ -1,12 +1,12 @@
 import { Router, type Request } from "express";
-import type { Db } from "@paperclipai/db";
+import type { Db } from "@business-factory/db";
 import {
   createProjectSchema,
   createProjectWorkspaceSchema,
   isUuidLike,
   updateProjectSchema,
   updateProjectWorkspaceSchema,
-} from "@paperclipai/shared";
+} from "@business-factory/shared";
 import { validate } from "../middleware/validate.js";
 import { projectService, logActivity } from "../services/index.js";
 import { syncProjectToAgentZeroRoot } from "../services/agent-zero-project-sync.js";
