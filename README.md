@@ -24,7 +24,7 @@ Business Factory is a Node.js server and React UI that orchestrates a team of AI
 <table>
   <tr>
     <td align="center"><strong>Works<br/>with</strong></td>
-    <td align="center"><img src="doc/assets/logos/agent-zero.webp" width="40" alt="Agent Zero" /><br/><sub>Agent Zero</sub></td>
+    <td align="center"><img src="doc/assets/logos/agent-zero.webp" width="42" alt="Agent Zero" /><br/><sub>Agent Zero</sub></td>
     <td align="center"><img src="doc/assets/logos/openclaw.svg" width="32" alt="OpenClaw" /><br/><sub>OpenClaw</sub></td>
     <td align="center"><img src="doc/assets/logos/claude.svg" width="32" alt="Claude" /><br/><sub>Claude Code</sub></td>
     <td align="center"><img src="doc/assets/logos/codex.svg" width="32" alt="Codex" /><br/><sub>Codex</sub></td>
