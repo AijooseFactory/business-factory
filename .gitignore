@@ -46,10 +46,7 @@ tmp/
 tests/e2e/test-results/
 tests/e2e/playwright-report/
 
-# Developer documentation (end-users see /docs)
-doc/
-
-# Development plans and specs
+# Development plans and specs (keep doc/ - it contains essential docs and assets)
 plans/
 
 # Claude Code skills
