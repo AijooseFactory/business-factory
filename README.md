@@ -1,8 +1,7 @@
-# What is Business Factory?
+# What is the Ai Business Factory?
 
-## Open-source office spaces for zero-human or human-in-the-loop AI Businesses
-
-**Business Factory is an AI Business orchestration platform.**
+## Open-source office spaces for human-in-the-loop or zero-human run AI Businesses
+**The Ai Business Factory is an Ai Business orchestration platform.**
 
 Business Factory is a Node.js server and React UI that orchestrates a team of AI agents to run a business. It has org charts, budgets, governance, goal alignment, and agent coordination.
 
@@ -16,7 +15,7 @@ Business Factory is a Node.js server and React UI that orchestrates a team of AI
 
 <br/>
 
-**COMING SOON: The Business Marketplace** — Download and run entire companies with one click. Browse pre-built business templates — full org structures, agent configs, and skills — and import them into your Business Factory instance in seconds.
+**COMING SOON: The Business Marketplace** — Download and run entire businesses with one click. Browse pre-built business templates — full org structures, agent configs, and skills — and import them into your Business Factory instance in seconds.
 
 <br/>
 
@@ -36,10 +35,9 @@ Business Factory is a Node.js server and React UI that orchestrates a team of AI
 
 <em>If it can receive a heartbeat, it can be hired.</em>
 </div>
-
 <br/>
 
-## Business Factory is right for you if:
+## Ai Business Factory is right for you if:
 
 - ✅ You want to build **autonomous AI companies or businesses**
 - ✅ You **coordinate many different agents** (Agent Zero, OpenClaw, Codex, Claude, Cursor) toward a common goal.
@@ -214,8 +212,6 @@ See [doc/DEVELOPING.md](doc/DEVELOPING.md) for the full development guide.
 ## Contributing
 
 We welcome contributions. See the [contributing guide](CONTRIBUTING.md) for details.
-
-<!-- TODO: add CONTRIBUTING.md -->
 
 <br/>
 
