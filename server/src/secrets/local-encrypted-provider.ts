@@ -12,7 +12,7 @@ interface LocalEncryptedMaterial extends StoredSecretVersionMaterial {
 }
 
 function resolveMasterKeyFilePath() {
-  const fromEnv = process.env.PAPERCLIP_SECRETS_MASTER_KEY_FILE;
+  const fromEnv = process.env.BUSINESS_FACTORY_SECRETS_MASTER_KEY_FILE ?? process.env.BUSINESS_FACTORY_SECRETS_MASTER_KEY ?? process.env.BUSINESS_FACTORY_SECRETS_MASTER_KEY_FILE ?? process.env.BUSINESS_FACTORY_SECRETS_MASTER_KEY ?? process.env.PAPERCLIP_SECRETS_MASTER_KEY_FILE;
   if (fromEnv && fromEnv.trim().length > 0) return path.resolve(fromEnv.trim());
   return path.resolve(process.cwd(), "data/secrets/master.key");
 }
@@ -39,7 +39,7 @@ function decodeMasterKey(raw: string): Buffer | null {
 }
 
 function loadOrCreateMasterKey(): Buffer {
-  const envKeyRaw = process.env.PAPERCLIP_SECRETS_MASTER_KEY;
+  const envKeyRaw = process.env.BUSINESS_FACTORY_SECRETS_MASTER_KEY ?? process.env.BUSINESS_FACTORY_SECRETS_MASTER_KEY ?? process.env.PAPERCLIP_SECRETS_MASTER_KEY;
   if (envKeyRaw && envKeyRaw.trim().length > 0) {
     const fromEnv = decodeMasterKey(envKeyRaw);
     if (!fromEnv) {

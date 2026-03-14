@@ -1,6 +1,6 @@
 import path from "node:path";
 
-const PAPERCLIP_ISSUE_STATUSES = new Set([
+const BUSINESS_FACTORY_ISSUE_STATUSES = new Set([
   "backlog",
   "todo",
   "in_progress",
@@ -10,7 +10,7 @@ const PAPERCLIP_ISSUE_STATUSES = new Set([
   "cancelled",
 ]);
 
-export type PaperclipResultEnvelope = {
+export type BusinessFactoryResultEnvelope = {
   status: string;
   summary: string | null;
   comment: string | null;
@@ -89,10 +89,10 @@ export function deriveAgentZeroProjectName(input: {
   return null;
 }
 
-function normalizePaperclipResultEnvelope(value: unknown): PaperclipResultEnvelope | null {
+function normalizeBusinessFactoryResultEnvelope(value: unknown): BusinessFactoryResultEnvelope | null {
   const parsed = parseObject(value);
   const status = nonEmpty(parsed.status);
-  if (!status || !PAPERCLIP_ISSUE_STATUSES.has(status)) return null;
+  if (!status || !BUSINESS_FACTORY_ISSUE_STATUSES.has(status)) return null;
 
   const summary = nonEmpty(parsed.summary);
   const comment = nonEmpty(parsed.comment);
@@ -101,19 +101,19 @@ function normalizePaperclipResultEnvelope(value: unknown): PaperclipResultEnvelo
   return { status, summary, comment };
 }
 
-function parseJsonCandidate(value: string): PaperclipResultEnvelope | null {
+function parseJsonCandidate(value: string): BusinessFactoryResultEnvelope | null {
   try {
-    return normalizePaperclipResultEnvelope(JSON.parse(value));
+    return normalizeBusinessFactoryResultEnvelope(JSON.parse(value));
   } catch {
     return null;
   }
 }
 
-export function parsePaperclipResultFromResponse(responseText: unknown): PaperclipResultEnvelope | null {
+export function parseBusinessFactoryResultFromResponse(responseText: unknown): BusinessFactoryResultEnvelope | null {
   const response = nonEmpty(responseText);
   if (!response) return null;
 
-  const marker = "PAPERCLIP_RESULT_JSON";
+  const marker = "BUSINESS_FACTORY_RESULT_JSON";
   const markerIndex = response.lastIndexOf(marker);
   const markerSlice = markerIndex >= 0 ? response.slice(markerIndex + marker.length).trim() : null;
 

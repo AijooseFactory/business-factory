@@ -48,6 +48,7 @@ interface UpgradeContext {
 
 interface IncomingMessageWithContext extends IncomingMessage {
   paperclipUpgradeContext?: UpgradeContext;
+  businessFactoryUpgradeContext?: UpgradeContext;
 }
 
 function hashToken(token: string) {
@@ -199,7 +200,7 @@ export function setupLiveEventsWebSocketServer(
   }, 30000);
 
   wss.on("connection", (socket: WsSocket, req: IncomingMessage) => {
-    const context = (req as IncomingMessageWithContext).paperclipUpgradeContext;
+    const context = (req as IncomingMessageWithContext).businessFactoryUpgradeContext ?? (req as IncomingMessageWithContext).paperclipUpgradeContext;
     if (!context) {
       socket.close(1008, "missing context");
       return;
@@ -257,7 +258,8 @@ export function setupLiveEventsWebSocketServer(
         }
 
         const reqWithContext = req as IncomingMessageWithContext;
-        reqWithContext.paperclipUpgradeContext = context;
+        reqWithContext.businessFactoryUpgradeContext = context;
+  reqWithContext.paperclipUpgradeContext = context;
 
         wss.handleUpgrade(req, socket, head, (ws: WsSocket) => {
           wss.emit("connection", ws, reqWithContext);

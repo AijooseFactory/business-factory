@@ -194,7 +194,7 @@ function sanitizeBranchName(value: string): string {
     .replace(/[^A-Za-z0-9._/-]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^[-/.]+|[-/.]+$/g, "")
-    .slice(0, 120) || "paperclip-work";
+    .slice(0, 120) || "business-factory-work";
 }
 
 function isAbsolutePath(value: string) {
@@ -246,6 +246,25 @@ function buildWorkspaceCommandEnv(input: {
   created: boolean;
 }) {
   const env: NodeJS.ProcessEnv = { ...process.env };
+  env.BUSINESS_FACTORY_WORKSPACE_CWD = input.worktreePath;
+  env.BUSINESS_FACTORY_WORKSPACE_PATH = input.worktreePath;
+  env.BUSINESS_FACTORY_WORKSPACE_WORKTREE_PATH = input.worktreePath;
+  env.BUSINESS_FACTORY_WORKSPACE_BRANCH = input.branchName;
+  env.BUSINESS_FACTORY_WORKSPACE_BASE_CWD = input.base.baseCwd;
+  env.BUSINESS_FACTORY_WORKSPACE_REPO_ROOT = input.repoRoot;
+  env.BUSINESS_FACTORY_WORKSPACE_SOURCE = input.base.source;
+  env.BUSINESS_FACTORY_WORKSPACE_REPO_REF = input.base.repoRef ?? "";
+  env.BUSINESS_FACTORY_WORKSPACE_REPO_URL = input.base.repoUrl ?? "";
+  env.BUSINESS_FACTORY_WORKSPACE_CREATED = input.created ? "true" : "false";
+  env.BUSINESS_FACTORY_PROJECT_ID = input.base.projectId ?? "";
+  env.BUSINESS_FACTORY_PROJECT_WORKSPACE_ID = input.base.workspaceId ?? "";
+  env.BUSINESS_FACTORY_AGENT_ID = input.agent.id;
+  env.BUSINESS_FACTORY_AGENT_NAME = input.agent.name;
+  env.BUSINESS_FACTORY_COMPANY_ID = input.agent.companyId;
+  env.BUSINESS_FACTORY_ISSUE_ID = input.issue?.id ?? "";
+  env.BUSINESS_FACTORY_ISSUE_IDENTIFIER = input.issue?.identifier ?? "";
+  env.BUSINESS_FACTORY_ISSUE_TITLE = input.issue?.title ?? "";
+  // Dual injection for backwards compatibility
   env.PAPERCLIP_WORKSPACE_CWD = input.worktreePath;
   env.PAPERCLIP_WORKSPACE_PATH = input.worktreePath;
   env.PAPERCLIP_WORKSPACE_WORKTREE_PATH = input.worktreePath;
@@ -362,7 +381,7 @@ export async function realizeExecutionWorkspace(input: {
   const configuredParentDir = asString(rawStrategy.worktreeParentDir, "");
   const worktreeParentDir = configuredParentDir
     ? resolveConfiguredPath(configuredParentDir, repoRoot)
-    : path.join(repoRoot, ".paperclip", "worktrees");
+    : path.join(repoRoot, ".business-factory", "worktrees");
   const worktreePath = path.join(worktreeParentDir, branchName);
   const baseRef = asString(rawStrategy.baseRef, input.base.repoRef ?? "HEAD");
 

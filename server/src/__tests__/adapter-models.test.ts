@@ -96,7 +96,7 @@ describe("adapter model listing", () => {
   });
 
   it("returns no opencode models when opencode command is unavailable", async () => {
-    process.env.PAPERCLIP_OPENCODE_COMMAND = "__paperclip_missing_opencode_command__";
+    process.env.BUSINESS_FACTORY_OPENCODE_COMMAND = "__business_factory_missing_opencode_command__";
 
     const models = await listAdapterModels("opencode_local");
     expect(models).toEqual([]);

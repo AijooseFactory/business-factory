@@ -13,9 +13,15 @@ function findConfigFileFromAncestors(startDir: string): string | null {
   let currentDir = absoluteStartDir;
 
   while (true) {
-    const candidate = path.resolve(currentDir, ".paperclip", DEFAULT_CONFIG_BASENAME);
-    if (fs.existsSync(candidate)) {
-      return candidate;
+    // Check .business-factory/ first, then fall back to .paperclip/ for backwards compatibility
+    const businessFactoryCandidate = path.resolve(currentDir, ".business-factory", DEFAULT_CONFIG_BASENAME);
+    if (fs.existsSync(businessFactoryCandidate)) {
+      return businessFactoryCandidate;
+    }
+
+    const paperclipCandidate = path.resolve(currentDir, ".paperclip", DEFAULT_CONFIG_BASENAME);
+    if (fs.existsSync(paperclipCandidate)) {
+      return paperclipCandidate;
     }
 
     const nextDir = path.resolve(currentDir, "..");

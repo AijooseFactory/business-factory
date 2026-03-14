@@ -24,6 +24,7 @@ import { sidebarBadgeRoutes } from "./routes/sidebar-badges.js";
 import { llmRoutes } from "./routes/llms.js";
 import { assetRoutes } from "./routes/assets.js";
 import { accessRoutes } from "./routes/access.js";
+import { agentZeroWebhookRoutes } from "./routes/agent-zero-webhook.js";
 import { applyUiBranding } from "./ui-branding.js";
 import type { BetterAuthSessionResult } from "./auth/better-auth.js";
 
@@ -122,6 +123,8 @@ export async function createApp(
       allowedHostnames: opts.allowedHostnames,
     }),
   );
+  // Agent Zero webhook endpoint for 2-way communication
+  api.use("/agent-zero", agentZeroWebhookRoutes(db));
   app.use("/api", api);
   app.use("/api", (_req, res) => {
     res.status(404).json({ error: "API route not found" });

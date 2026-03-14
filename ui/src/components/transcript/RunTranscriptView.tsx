@@ -26,7 +26,7 @@ interface RunTranscriptViewProps {
   limit?: number;
   streaming?: boolean;
   collapseStdout?: boolean;
-  suppressBenignPaperclipNotices?: boolean;
+  suppressBenignBusinessFactoryNotices?: boolean;
   emptyMessage?: string;
   className?: string;
 }
@@ -968,16 +968,16 @@ export function RunTranscriptView({
   limit,
   streaming = false,
   collapseStdout = false,
-  suppressBenignPaperclipNotices = false,
+  suppressBenignBusinessFactoryNotices = false,
   emptyMessage = "No transcript yet.",
   className,
 }: RunTranscriptViewProps) {
   const displayState = useMemo(
     () => getTranscriptDisplayState(entries, {
-      suppressBenignPaperclipNotices,
+      suppressBenignBusinessFactoryNotices,
       emptyMessage,
     }),
-    [emptyMessage, entries, suppressBenignPaperclipNotices],
+    [emptyMessage, entries, suppressBenignBusinessFactoryNotices],
   );
   const displayEntries = displayState.entries;
   const blocks = useMemo(() => normalizeTranscript(displayEntries, streaming), [displayEntries, streaming]);

@@ -230,7 +230,7 @@ export function ApprovalDetail() {
           <div>
             <p className="text-sm font-medium text-blue-900 dark:text-blue-100">OpenClaw bootstrap claim</p>
             <p className="text-xs text-blue-800 dark:text-blue-200/90">
-              Use this one-time claim to mint the first `PAPERCLIP_API_KEY` for the approved OpenClaw hire.
+              Use this one-time claim to mint the first `BUSINESS_FACTORY_API_KEY` for the approved OpenClaw hire.
             </p>
           </div>
           {claimSecret && (

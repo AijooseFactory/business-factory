@@ -178,7 +178,7 @@ function AgentRunCard({
           limit={5}
           streaming={isActive}
           collapseStdout
-          suppressBenignPaperclipNotices
+          suppressBenignBusinessFactoryNotices
           emptyMessage={emptyMessage}
         />
       </div>

@@ -9,7 +9,6 @@ import {
 } from "@business-factory/shared";
 import { validate } from "../middleware/validate.js";
 import { projectService, logActivity } from "../services/index.js";
-import { syncProjectToAgentZeroRoot } from "../services/agent-zero-project-sync.js";
 import { conflict } from "../errors.js";
 import { assertCompanyAccess, getActorInfo } from "./authz.js";
 
@@ -91,20 +90,6 @@ export function projectRoutes(db: Db) {
       createdWorkspaceId = createdWorkspace.id;
     }
     const hydratedProject = workspace ? await svc.getById(project.id) : project;
-    if (createdWorkspaceId) {
-      try {
-        await syncProjectToAgentZeroRoot(db, project.id);
-      } catch (err) {
-        if (createdWorkspaceId) {
-          await svc.removeWorkspace(project.id, createdWorkspaceId).catch(() => null);
-        }
-        await svc.remove(project.id).catch(() => null);
-        res.status(500).json({
-          error: `Failed to sync project to Agent Zero: ${err instanceof Error ? err.message : String(err)}`,
-        });
-        return;
-      }
-    }
 
     const actor = getActorInfo(req);
     await logActivity(db, {
@@ -134,14 +119,6 @@ export function projectRoutes(db: Db) {
     const project = await svc.update(id, req.body);
     if (!project) {
       res.status(404).json({ error: "Project not found" });
-      return;
-    }
-    try {
-      await syncProjectToAgentZeroRoot(db, id);
-    } catch (err) {
-      res.status(500).json({
-        error: `Failed to sync project to Agent Zero: ${err instanceof Error ? err.message : String(err)}`,
-      });
       return;
     }
 
@@ -185,15 +162,6 @@ export function projectRoutes(db: Db) {
       res.status(422).json({ error: "Invalid project workspace payload" });
       return;
     }
-    try {
-      await syncProjectToAgentZeroRoot(db, id);
-    } catch (err) {
-      await svc.removeWorkspace(id, workspace.id).catch(() => null);
-      res.status(500).json({
-        error: `Failed to sync project to Agent Zero: ${err instanceof Error ? err.message : String(err)}`,
-      });
-      return;
-    }
 
     const actor = getActorInfo(req);
     await logActivity(db, {
@@ -235,14 +203,6 @@ export function projectRoutes(db: Db) {
       const workspace = await svc.updateWorkspace(id, workspaceId, req.body);
       if (!workspace) {
         res.status(422).json({ error: "Invalid project workspace payload" });
-        return;
-      }
-      try {
-        await syncProjectToAgentZeroRoot(db, id);
-      } catch (err) {
-        res.status(500).json({
-          error: `Failed to sync project to Agent Zero: ${err instanceof Error ? err.message : String(err)}`,
-        });
         return;
       }
 

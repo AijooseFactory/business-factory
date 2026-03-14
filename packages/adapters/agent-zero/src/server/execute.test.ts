@@ -32,7 +32,7 @@ function buildContext(
         id: "project-123",
         name: "Hybrid GraphRAG for Agent Zero",
       },
-      paperclipWorkspace: {
+      businessFactoryWorkspace: {
         cwd: "/Users/george/Mac/data/usr/projects/ai_joose_factory/.a0proj/_projects/internal/graphrag-agent-zero",
         repoUrl: "https://github.com/AijooseFactory/graphrag-agent-zero",
         repoRef: "main",
@@ -77,7 +77,7 @@ describe("agent zero execute", () => {
     }
   });
 
-  it("preserves Paperclip project context in the message and persists the returned context id", async () => {
+  it("preserves Business Factory project context in the message and persists the returned context id", async () => {
     const server = await createMockAgentZeroServer();
     servers.push(server);
     const result = await execute(
@@ -97,15 +97,15 @@ describe("agent zero execute", () => {
     expect(String(request.body.message)).toContain("Project: Hybrid GraphRAG for Agent Zero");
     expect(String(request.body.message)).toContain("Workspace: /Users/george/Mac/data/usr/projects/ai_joose_factory/.a0proj/_projects/internal/graphrag-agent-zero");
     expect(String(request.body.message)).toContain("Repository: https://github.com/AijooseFactory/graphrag-agent-zero");
-    expect(String(request.body.message)).toContain("PAPERCLIP_API_KEY");
-    expect(String(request.body.message)).toContain("Treat the assigned Paperclip issue title and description above as the task to execute.");
+    expect(String(request.body.message)).toContain("BUSINESS_FACTORY_API_KEY");
+    expect(String(request.body.message)).toContain("Treat the assigned Business Factory issue title and description above as the task to execute.");
     expect(String(request.body.message)).toContain("Do not ask the user what task to execute");
-    expect(String(request.body.message)).toContain("Treat the current Paperclip issue text as authoritative even if prior memory");
+    expect(String(request.body.message)).toContain("Treat the current Business Factory issue text as authoritative even if prior memory");
     expect(String(request.body.message)).toContain("Do not claim the task is already complete unless you actually perform");
-    expect(String(request.body.message)).toContain("Never invent or substitute a Paperclip API base URL");
+    expect(String(request.body.message)).toContain("Never invent or substitute a Business Factory API base URL");
     expect(String(request.body.message)).toContain(".a0proj/variables.env");
-    expect(String(request.body.message)).toContain("POST /api/companies/$PAPERCLIP_COMPANY_ID/issues");
-    expect(String(request.body.message)).toContain("POST /api/companies/$PAPERCLIP_COMPANY_ID/projects");
+    expect(String(request.body.message)).toContain("POST /api/companies/$BUSINESS_FACTORY_COMPANY_ID/issues");
+    expect(String(request.body.message)).toContain("POST /api/companies/$BUSINESS_FACTORY_COMPANY_ID/projects");
     expect(String(request.body.message)).toContain(".a0proj/secrets.env");
 
     expect(result.sessionId).toBe("ctx-123");
@@ -190,12 +190,12 @@ describe("agent zero execute", () => {
     expect(request.body.project_name).toBeUndefined();
   });
 
-  it("extracts a Paperclip issue result envelope from the agent response", async () => {
+  it("extracts a Business Factory issue result envelope from the agent response", async () => {
     const server = createMockAgentZeroServer({
       context_id: "ctx-123",
       response: [
         "Task complete.",
-        "PAPERCLIP_RESULT_JSON",
+        "BUSINESS_FACTORY_RESULT_JSON",
         "```json",
         JSON.stringify({
           status: "done",
@@ -216,7 +216,7 @@ describe("agent zero execute", () => {
 
     expect(result.resultJson).toMatchObject({
       context_id: "ctx-123",
-      paperclipResult: {
+      businessFactoryResult: {
         status: "done",
         summary: "Created the missing Agent Zero project and verified the workspace.",
         comment: "Projection is in place and the issue is complete.",

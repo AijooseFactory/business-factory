@@ -62,7 +62,7 @@ describe("mergeJoinDefaultsPayloadForReplay", () => {
     const merged = mergeJoinDefaultsPayloadForReplay(
       {
         url: "ws://old.example:18789",
-        paperclipApiUrl: "http://host.docker.internal:3100",
+        businessFactoryApiUrl: "http://host.docker.internal:3100",
         headers: {
           "x-openclaw-token": "old-token-1234567890",
           "x-custom": "keep-me",
@@ -83,6 +83,9 @@ describe("mergeJoinDefaultsPayloadForReplay", () => {
     }) as Record<string, unknown>;
 
     expect(normalized.url).toBe("ws://old.example:18789");
+    // During rebranding transition, businessFactoryApiUrl stays as-is from existing defaults
+    // and paperclipApiUrl is added as a separate field. This will be consolidated post-rebrand.
+    expect(normalized.businessFactoryApiUrl).toBe("http://host.docker.internal:3100");
     expect(normalized.paperclipApiUrl).toBe("https://paperclip.example.com");
     expect(normalized.headers).toMatchObject({
       "x-openclaw-token": "new-token-1234567890",

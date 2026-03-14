@@ -89,7 +89,7 @@ async function runPnpm(args, options = {}) {
 
 async function maybePreflightMigrations() {
   if (mode !== "watch") return;
-  if (process.env.PAPERCLIP_MIGRATION_PROMPT === "never") return;
+  if (process.env.BUSINESS_FACTORY_MIGRATION_PROMPT === "never" || process.env.PAPERCLIP_MIGRATION_PROMPT === "never") return;
 
   const status = await runPnpm(
     ["--filter", "@business-factory/db", "exec", "tsx", "src/migration-status.ts", "--json"],
@@ -157,6 +157,7 @@ async function maybePreflightMigrations() {
 await maybePreflightMigrations();
 
 if (mode === "watch") {
+  env.BUSINESS_FACTORY_MIGRATION_PROMPT = "never";
   env.PAPERCLIP_MIGRATION_PROMPT = "never";
 }
 

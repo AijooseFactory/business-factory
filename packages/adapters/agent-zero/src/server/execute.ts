@@ -5,7 +5,7 @@ import {
   deriveAgentZeroProjectName,
   nonEmpty,
   parseObject,
-  parsePaperclipResultFromResponse,
+  parseBusinessFactoryResultFromResponse,
 } from "./utils.js";
 
 function getIssueContext(context: Record<string, unknown>) {
@@ -17,7 +17,7 @@ function getProjectContext(context: Record<string, unknown>) {
 }
 
 function getWorkspaceContext(context: Record<string, unknown>) {
-  return parseObject(context.paperclipWorkspace);
+  return parseObject(context.businessFactoryWorkspace);
 }
 
 function buildPaperclipBridgeText(input: {
@@ -27,24 +27,24 @@ function buildPaperclipBridgeText(input: {
   if (!input.hasProjectContext) return null;
 
   const lines = [
-    "Paperclip bridge:",
-    "The active Agent Zero project exposes PAPERCLIP_API_URL, PAPERCLIP_API_KEY, PAPERCLIP_COMPANY_ID, PAPERCLIP_AGENT_ID, and PAPERCLIP_PROJECT_ID.",
-    "During a live Paperclip-assigned run, PAPERCLIP_RUN_ID and the current PAPERCLIP_TASK_ID / PAPERCLIP_ISSUE_ID variables are also available.",
-    "Treat the assigned Paperclip issue title and description above as the task to execute.",
+    "Business Factory bridge:",
+    "The active Agent Zero project exposes BUSINESS_FACTORY_API_URL, BUSINESS_FACTORY_API_KEY, BUSINESS_FACTORY_COMPANY_ID, BUSINESS_FACTORY_AGENT_ID, and BUSINESS_FACTORY_PROJECT_ID.",
+    "During a live Business Factory-assigned run, BUSINESS_FACTORY_RUN_ID and the current BUSINESS_FACTORY_TASK_ID / BUSINESS_FACTORY_ISSUE_ID variables are also available.",
+    "Treat the assigned Business Factory issue title and description above as the task to execute.",
     "Do not ask the user what task to execute or ask them to restate the issue unless the issue title and description are both missing or contradictory.",
-    "Treat the current Paperclip issue text as authoritative even if prior memory, prior runs, or repo-local agent notes mention the same issue or a different agent roster.",
-    "Do not claim the task is already complete unless you actually perform the work in this run or verify the completed changes directly from the current workspace and Paperclip state.",
+    "Treat the current Business Factory issue text as authoritative even if prior memory, prior runs, or repo-local agent notes mention the same issue or a different agent roster.",
+    "Do not claim the task is already complete unless you actually perform the work in this run or verify the completed changes directly from the current workspace and Business Factory state.",
     "If your current shell or tool runtime does not already expose those values directly, read them from the active project's .a0proj/variables.env and .a0proj/secrets.env files.",
-    "Never invent or substitute a Paperclip API base URL. Read PAPERCLIP_API_URL from .a0proj/variables.env instead of assuming a public paperclip.technology endpoint.",
-    "Use Authorization: Bearer $PAPERCLIP_API_KEY on Paperclip API requests.",
-    "If PAPERCLIP_RUN_ID is set for the current assigned issue, include X-Paperclip-Run-Id: $PAPERCLIP_RUN_ID on mutating issue calls for that run.",
-    "To create a new Paperclip task: POST /api/companies/$PAPERCLIP_COMPANY_ID/issues.",
-    "To create a new Paperclip project: POST /api/companies/$PAPERCLIP_COMPANY_ID/projects.",
+    "Never invent or substitute a Business Factory API base URL. Read BUSINESS_FACTORY_API_URL from .a0proj/variables.env instead of assuming a public business-factory.technology endpoint.",
+    "Use Authorization: Bearer $BUSINESS_FACTORY_API_KEY on Business Factory API requests.",
+    "If BUSINESS_FACTORY_RUN_ID is set for the current assigned issue, include X-Business-Factory-Run-Id: $BUSINESS_FACTORY_RUN_ID on mutating issue calls for that run.",
+    "To create a new Business Factory task: POST /api/companies/$BUSINESS_FACTORY_COMPANY_ID/issues.",
+    "To create a new Business Factory project: POST /api/companies/$BUSINESS_FACTORY_COMPANY_ID/projects.",
   ];
 
   if (input.hasIssueContext) {
     lines.push(
-      "When closing the assigned issue from chat, still end your response with PAPERCLIP_RESULT_JSON so Paperclip can reconcile the run summary.",
+      "When closing the assigned issue from chat, still end your response with BUSINESS_FACTORY_RESULT_JSON so Business Factory can reconcile the run summary.",
     );
   }
 
@@ -187,12 +187,12 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     const result = await res.json();
     const responseText = typeof result.response === "string" ? result.response : "Check logs";
     const nextContextId = nonEmpty(result.context_id);
-    const paperclipResult = parsePaperclipResultFromResponse(responseText);
+    const businessFactoryResult = parseBusinessFactoryResultFromResponse(responseText);
     const resultJson =
-      paperclipResult
+      businessFactoryResult
         ? {
             ...result,
-            paperclipResult,
+            businessFactoryResult,
           }
         : result;
 

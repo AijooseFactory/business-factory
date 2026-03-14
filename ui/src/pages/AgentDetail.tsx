@@ -24,7 +24,7 @@ import { EntityRow } from "../components/EntityRow";
 import { Identity } from "../components/Identity";
 import { PageSkeleton } from "../components/PageSkeleton";
 import { ScrollToBottom } from "../components/ScrollToBottom";
-import { isBenignPaperclipRuntimeNotice } from "../lib/transcript-presentation";
+import { isBenignBusinessFactoryRuntimeNotice } from "../lib/transcript-presentation";
 import { formatCents, formatDate, relativeTime, formatTokens } from "../lib/utils";
 import { cn } from "../lib/utils";
 import { Button } from "@/components/ui/button";
@@ -1392,7 +1392,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType }: { run: Heartb
     [touchedIssues],
   );
   const hasMeaningfulStderrExcerpt = Boolean(
-    run.stderrExcerpt && run.stderrExcerpt.trim() && !isBenignPaperclipRuntimeNotice(run.stderrExcerpt),
+    run.stderrExcerpt && run.stderrExcerpt.trim() && !isBenignBusinessFactoryRuntimeNotice(run.stderrExcerpt),
   );
 
   const clearSessionsForTouchedIssues = useMutation({
@@ -2214,7 +2214,7 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
           entries={transcript}
           mode={transcriptMode}
           streaming={isLive}
-          suppressBenignPaperclipNotices
+          suppressBenignBusinessFactoryNotices
           emptyMessage={run.logRef ? "Waiting for transcript..." : "No persisted transcript for this run."}
         />
         {logError && (
@@ -2234,7 +2234,7 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
               {redactHomePathUserSegments(run.error)}
             </div>
           )}
-          {run.stderrExcerpt && run.stderrExcerpt.trim() && !isBenignPaperclipRuntimeNotice(run.stderrExcerpt) && (
+          {run.stderrExcerpt && run.stderrExcerpt.trim() && !isBenignBusinessFactoryRuntimeNotice(run.stderrExcerpt) && (
             <div>
               <div className="text-xs text-red-700 dark:text-red-300 mb-1">stderr excerpt</div>
               <pre className="bg-red-50 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap text-red-800 dark:text-red-100">

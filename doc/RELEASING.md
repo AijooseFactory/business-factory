@@ -1,6 +1,6 @@
-# Releasing Paperclip
+# Releasing Business Factory
 
-Maintainer runbook for shipping a full Paperclip release across npm, GitHub, and the website-facing changelog surface.
+Maintainer runbook for shipping a full Business Factory release across npm, GitHub, and the website-facing changelog surface.
 
 The release model is branch-driven:
 
@@ -17,7 +17,7 @@ The release model is branch-driven:
 Every release has four separate surfaces:
 
 1. **Verification** — the exact git SHA passes typecheck, tests, and build
-2. **npm** — `paperclipai` and public workspace packages are published
+2. **npm** — `business-factoryai` and public workspace packages are published
 3. **GitHub** — the stable release gets a git tag and GitHub Release
 4. **Website / announcements** — the stable changelog is published externally and announced
 
@@ -58,7 +58,7 @@ From the release worktree:
 
 ```bash
 VERSION=X.Y.Z
-claude --print --output-format stream-json --verbose --dangerously-skip-permissions --model claude-opus-4-6 "Use the release-changelog skill to draft or update releases/v${VERSION}.md for Paperclip. Read doc/RELEASING.md and .agents/skills/release-changelog/SKILL.md, then generate the stable changelog for v${VERSION} from commits since the last stable tag. Do not create a canary changelog."
+claude --print --output-format stream-json --verbose --dangerously-skip-permissions --model claude-opus-4-6 "Use the release-changelog skill to draft or update releases/v${VERSION}.md for Business Factory. Read doc/RELEASING.md and .agents/skills/release-changelog/SKILL.md, then generate the stable changelog for v${VERSION} from commits since the last stable tag. Do not create a canary changelog."
 ```
 
 ### 3. Verify and publish a canary
@@ -73,7 +73,7 @@ PAPERCLIPAI_VERSION=canary ./scripts/docker-onboard-smoke.sh
 Users install canaries with:
 
 ```bash
-npx paperclipai@canary onboard
+npx business-factoryai@canary onboard
 ```
 
 ### 4. Publish stable
@@ -90,7 +90,7 @@ Then open a PR from `release/X.Y.Z` to `master` and merge without squash or reba
 
 ## Release Branches
 
-Paperclip uses one release branch per target stable version:
+Business Factory uses one release branch per target stable version:
 
 - `release/0.3.0`
 - `release/0.3.1`
@@ -120,7 +120,7 @@ Useful options:
 
 ```bash
 ./scripts/release-start.sh patch --dry-run
-./scripts/release-start.sh minor --worktree-dir ../paperclip-release-0.4.0
+./scripts/release-start.sh minor --worktree-dir ../business-factory-release-0.4.0
 ./scripts/release-start.sh patch --no-push
 ```
 
@@ -232,7 +232,7 @@ PAPERCLIP_PORT=3234 ./scripts/clean-onboard-ref.sh
 
 Minimum checks:
 
-- `npx paperclipai@canary onboard` installs
+- `npx business-factoryai@canary onboard` installs
 - onboarding completes without crashes
 - the server boots
 - the UI loads
@@ -356,7 +356,7 @@ It does not merge the release branch back to `master` for you.
 
 ### After a stable
 
-- [ ] `npm view paperclipai@latest version` matches the new stable version
+- [ ] `npm view business-factoryai@latest version` matches the new stable version
 - [ ] The git tag exists on GitHub
 - [ ] The GitHub Release exists and uses `releases/vX.Y.Z.md`
 - [ ] `vX.Y.Z` is reachable from `master`

@@ -14,7 +14,7 @@ import { test, expect } from "@playwright/test";
  * assertions (requires a valid ANTHROPIC_API_KEY).
  */
 
-const SKIP_LLM = process.env.PAPERCLIP_E2E_SKIP_LLM !== "false";
+const SKIP_LLM = process.env.BUSINESS_FACTORY_E2E_SKIP_LLM ?? process.env.PAPERCLIP_E2E_SKIP_LLM !== "false";
 
 const COMPANY_NAME = `E2E-Test-${Date.now()}`;
 const AGENT_NAME = "CEO";

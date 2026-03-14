@@ -42,10 +42,6 @@ import {
   parseProjectExecutionWorkspacePolicy,
   resolveExecutionWorkspaceMode,
 } from "./execution-workspace-policy.js";
-import {
-  ensureAgentZeroProjectBridgeForWorkspace,
-  syncAgentZeroProjectBridgeFiles,
-} from "./agent-zero-project-sync.js";
 import { normalizeSharedProjectPath } from "./shared-project-paths.js";
 
 const MAX_LIVE_LOG_CHUNK_BYTES = 8 * 1024;
@@ -1551,28 +1547,6 @@ export function heartbeatService(db: Db) {
         });
       };
 
-      const agentZeroBridgeWorkspaceCwd =
-        agent.adapterType === "agent_zero" && executionWorkspace.projectId
-          ? readNonEmptyString(executionWorkspace.cwd)
-          : null;
-      if (agentZeroBridgeWorkspaceCwd) {
-        await ensureAgentZeroProjectBridgeForWorkspace(db, {
-          companyId: agent.companyId,
-          agentId: agent.id,
-          projectId: executionWorkspace.projectId,
-          workspaceCwd: agentZeroBridgeWorkspaceCwd,
-          runtime: {
-            runId: run.id,
-            taskId: readNonEmptyString(context.taskId) ?? issueId ?? null,
-            issueId: issueId ?? null,
-            issueIdentifier: issueRef?.identifier ?? null,
-            issueTitle: issueRef?.title ?? null,
-            wakeReason: readNonEmptyString(context.wakeReason),
-            wakeCommentId: readNonEmptyString(context.wakeCommentId) ?? readNonEmptyString(context.commentId),
-          },
-        });
-      }
-
       const adapter = getServerAdapter(agent.adapterType);
       const authToken = adapter.supportsLocalAgentJwt
         ? createLocalAgentJwt(agent.id, agent.companyId, agent.adapterType, run.id)
@@ -1585,7 +1559,7 @@ export function heartbeatService(db: Db) {
             runId: run.id,
             adapterType: agent.adapterType,
           },
-          "local agent jwt secret missing or invalid; running without injected PAPERCLIP_API_KEY",
+          "local agent jwt secret missing or invalid; running without injected BUSINESS_FACTORY_API_KEY",
         );
       }
       const adapterResult = await adapter.execute({
@@ -1826,30 +1800,6 @@ export function heartbeatService(db: Db) {
 
       await finalizeAgentStatus(agent.id, "failed");
     } finally {
-      if (agent.adapterType === "agent_zero" && executionWorkspace.projectId) {
-        const bridgeWorkspaceCwd = readNonEmptyString(executionWorkspace.cwd);
-        if (bridgeWorkspaceCwd) {
-          try {
-            await syncAgentZeroProjectBridgeFiles({
-              workspaceCwd: bridgeWorkspaceCwd,
-              runtime: {
-                runId: null,
-                taskId: null,
-                issueId: null,
-                issueIdentifier: null,
-                issueTitle: null,
-                wakeReason: null,
-                wakeCommentId: null,
-              },
-            });
-          } catch (err) {
-            logger.warn(
-              { err, agentId: agent.id, runId: run.id, workspaceCwd: bridgeWorkspaceCwd },
-              "failed to clear Agent Zero Paperclip runtime bridge context",
-            );
-          }
-        }
-      }
       await releaseRuntimeServicesForRun(run.id);
       await startNextQueuedRunForAgent(agent.id);
     }

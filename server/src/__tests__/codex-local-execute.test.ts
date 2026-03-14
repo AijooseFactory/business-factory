@@ -109,7 +109,7 @@ describe("codex execute", () => {
 
       const isolatedAuth = path.join(isolatedCodexHome, "auth.json");
       const isolatedConfig = path.join(isolatedCodexHome, "config.toml");
-      const isolatedSkill = path.join(isolatedCodexHome, "skills", "paperclip");
+      const isolatedSkill = path.join(isolatedCodexHome, "skills", "business-factory");
 
       expect((await fs.lstat(isolatedAuth)).isSymbolicLink()).toBe(true);
       expect(await fs.realpath(isolatedAuth)).toBe(await fs.realpath(path.join(sharedCodexHome, "auth.json")));

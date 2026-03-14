@@ -26,7 +26,6 @@ import { loadConfig } from "./config.js";
 import { logger } from "./middleware/logger.js";
 import { setupLiveEventsWebSocketServer } from "./realtime/live-events-ws.js";
 import { heartbeatService, reconcilePersistedRuntimeServicesOnStartup } from "./services/index.js";
-import { startAgentZeroProjectSync } from "./services/agent-zero-project-sync.js";
 import { createStorageServiceFromConfig } from "./storage/index.js";
 import { printStartupBanner } from "./startup-banner.js";
 import { getBoardClaimWarningUrl, initializeBoardClaimChallenge } from "./board-claim.js";
@@ -97,7 +96,7 @@ export async function startServer(): Promise<StartedServer> {
   }
   
   async function promptApplyMigrations(migrations: string[]): Promise<boolean> {
-    if (process.env.PAPERCLIP_MIGRATION_PROMPT === "never") return false;
+    if ((process.env.BUSINESS_FACTORY_MIGRATION_PROMPT === "never" || process.env.PAPERCLIP_MIGRATION_PROMPT === "never")) return false;
     if (process.env.PAPERCLIP_MIGRATION_AUTO_APPLY === "true") return true;
     if (!stdin.isTTY || !stdout.isTTY) return true;
   
@@ -514,10 +513,6 @@ export async function startServer(): Promise<StartedServer> {
       logger.error({ err }, "startup reconciliation of persisted runtime services failed");
     });
 
-  void startAgentZeroProjectSync(db as any).catch((err) => {
-    logger.error({ err }, "Agent Zero project sync failed to start");
-  });
-  
   if (config.heartbeatSchedulerEnabled) {
     const heartbeat = heartbeatService(db as any);
   

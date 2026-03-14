@@ -71,7 +71,7 @@ function resolveAgentJwtSecretStatus(
   status: "pass" | "warn";
   message: string;
 } {
-  const envValue = process.env.PAPERCLIP_AGENT_JWT_SECRET?.trim();
+  const envValue = process.env.BUSINESS_FACTORY_AGENT_JWT_SECRET ?? process.env.PAPERCLIP_AGENT_JWT_SECRET?.trim();
   if (envValue) {
     return {
       status: "pass",

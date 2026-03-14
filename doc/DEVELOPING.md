@@ -15,6 +15,23 @@ Current implementation status:
 - Node.js 20+
 - pnpm 9+
 
+## Environment Variable Naming
+
+Business Factory was previously named Paperclip. Both naming conventions are supported:
+
+| Old Name (Paperclip) | New Name (Business Factory) |
+|---------------------|----------------------------|
+| `PAPERCLIP_API_URL` | `BUSINESS_FACTORY_API_URL` |
+| `PAPERCLIP_API_KEY` | `BUSINESS_FACTORY_API_KEY` |
+| `PAPERCLIP_COMPANY_ID` | `BUSINESS_FACTORY_COMPANY_ID` |
+| `PAPERCLIP_AGENT_ID` | `BUSINESS_FACTORY_AGENT_ID` |
+| `PAPERCLIP_RUN_ID` | `BUSINESS_FACTORY_RUN_ID` |
+| `PAPERCLIP_PROJECT_ID` | `BUSINESS_FACTORY_PROJECT_ID` |
+| `PAPERCLIP_HOME` | `BUSINESS_FACTORY_HOME` |
+| `PAPERCLIP_SECRETS_*` | `BUSINESS_FACTORY_SECRETS_*` |
+
+The old `PAPERCLIP_*` names are still supported for backward compatibility. New deployments should prefer `BUSINESS_FACTORY_*` names. Documentation may still reference old names in some places.
+
 ## Dependency Lockfile Policy
 
 GitHub Actions owns `pnpm-lock.yaml`.
@@ -50,7 +67,7 @@ This runs dev as `authenticated/private` and binds the server to `0.0.0.0` for p
 Allow additional private hostnames (for example custom Tailscale hostnames):
 
 ```sh
-pnpm paperclipai allowed-hostname dotta-macbook-pro
+pnpm business-factoryai allowed-hostname dotta-macbook-pro
 ```
 
 ## One-Command Local Run
@@ -58,27 +75,27 @@ pnpm paperclipai allowed-hostname dotta-macbook-pro
 For a first-time local install, you can bootstrap and run in one command:
 
 ```sh
-pnpm paperclipai run
+pnpm business-factoryai run
 ```
 
-`paperclipai run` does:
+`business-factoryai run` does:
 
 1. auto-onboard if config is missing
-2. `paperclipai doctor` with repair enabled
+2. `business-factoryai doctor` with repair enabled
 3. starts the server when checks pass
 
 ## Docker Quickstart (No local Node install)
 
-Build and run Paperclip in Docker:
+Build and run Business Factory in Docker:
 
 ```sh
-docker build -t paperclip-local .
-docker run --name paperclip \
+docker build -t business-factory-local .
+docker run --name business-factory \
   -p 3100:3100 \
   -e HOST=0.0.0.0 \
-  -e PAPERCLIP_HOME=/paperclip \
-  -v "$(pwd)/data/docker-paperclip:/paperclip" \
-  paperclip-local
+  -e PAPERCLIP_HOME=/business-factory \
+  -v "$(pwd)/data/docker-business-factory:/business-factory" \
+  business-factory-local
 ```
 
 Or use Compose:
@@ -94,12 +111,12 @@ See `doc/DOCKER.md` for API key wiring (`OPENAI_API_KEY` / `ANTHROPIC_API_KEY`) 
 For local development, leave `DATABASE_URL` unset.
 The server will automatically use embedded PostgreSQL and persist data at:
 
-- `~/.paperclip/instances/default/db`
+- `~/.business-factory/instances/default/db`
 
 Override home and instance:
 
 ```sh
-PAPERCLIP_HOME=/custom/path PAPERCLIP_INSTANCE_ID=dev pnpm paperclipai run
+PAPERCLIP_HOME=/custom/path PAPERCLIP_INSTANCE_ID=dev pnpm business-factoryai run
 ```
 
 No Docker or external database is required for this mode.
@@ -108,41 +125,41 @@ No Docker or external database is required for this mode.
 
 For local development, the default storage provider is `local_disk`, which persists uploaded images/attachments at:
 
-- `~/.paperclip/instances/default/data/storage`
+- `~/.business-factory/instances/default/data/storage`
 
 Configure storage provider/settings:
 
 ```sh
-pnpm paperclipai configure --section storage
+pnpm business-factoryai configure --section storage
 ```
 
 ## Default Agent Workspaces
 
-When a local agent run has no resolved project/session workspace, Paperclip falls back to an agent home workspace under the instance root:
+When a local agent run has no resolved project/session workspace, Business Factory falls back to an agent home workspace under the instance root:
 
-- `~/.paperclip/instances/default/workspaces/<agent-id>`
+- `~/.business-factory/instances/default/workspaces/<agent-id>`
 
 This path honors `PAPERCLIP_HOME` and `PAPERCLIP_INSTANCE_ID` in non-default setups.
 
 ## Worktree-local Instances
 
-When developing from multiple git worktrees, do not point two Paperclip servers at the same embedded PostgreSQL data directory.
+When developing from multiple git worktrees, do not point two Business Factory servers at the same embedded PostgreSQL data directory.
 
-Instead, create a repo-local Paperclip config plus an isolated instance for the worktree:
+Instead, create a repo-local Business Factory config plus an isolated instance for the worktree:
 
 ```sh
-paperclipai worktree init
+business-factoryai worktree init
 # or create the git worktree and initialize it in one step:
-pnpm paperclipai worktree:make paperclip-pr-432
+pnpm business-factoryai worktree:make business-factory-pr-432
 ```
 
 This command:
 
-- writes repo-local files at `.paperclip/config.json` and `.paperclip/.env`
-- creates an isolated instance under `~/.paperclip-worktrees/instances/<worktree-id>/`
+- writes repo-local files at `.business-factory/config.json` and `.business-factory/.env`
+- creates an isolated instance under `~/.business-factory-worktrees/instances/<worktree-id>/`
 - when run inside a linked git worktree, mirrors the effective git hooks into that worktree's private git dir
 - picks a free app port and embedded PostgreSQL port
-- by default seeds the isolated DB in `minimal` mode from the current effective Paperclip instance/config (repo-local worktree config when present, otherwise the default instance) via a logical SQL snapshot
+- by default seeds the isolated DB in `minimal` mode from the current effective Business Factory instance/config (repo-local worktree config when present, otherwise the default instance) via a logical SQL snapshot
 
 Seed modes:
 
@@ -150,7 +167,7 @@ Seed modes:
 - `full` makes a full logical clone of the source instance
 - `--no-seed` creates an empty isolated instance
 
-After `worktree init`, both the server and the CLI auto-load the repo-local `.paperclip/.env` when run inside that worktree, so normal commands like `pnpm dev`, `paperclipai doctor`, and `paperclipai db:backup` stay scoped to the worktree instance.
+After `worktree init`, both the server and the CLI auto-load the repo-local `.business-factory/.env` when run inside that worktree, so normal commands like `pnpm dev`, `business-factoryai doctor`, and `business-factoryai db:backup` stay scoped to the worktree instance.
 
 That repo-local env also sets:
 
@@ -163,20 +180,20 @@ The server/UI use those values for worktree-specific branding such as the top ba
 Print shell exports explicitly when needed:
 
 ```sh
-paperclipai worktree env
+business-factoryai worktree env
 # or:
-eval "$(paperclipai worktree env)"
+eval "$(business-factoryai worktree env)"
 ```
 
 ### Worktree CLI Reference
 
-**`pnpm paperclipai worktree init [options]`** — Create repo-local config/env and an isolated instance for the current worktree.
+**`pnpm business-factoryai worktree init [options]`** — Create repo-local config/env and an isolated instance for the current worktree.
 
 | Option | Description |
 |---|---|
 | `--name <name>` | Display name used to derive the instance id |
 | `--instance <id>` | Explicit isolated instance id |
-| `--home <path>` | Home root for worktree instances (default: `~/.paperclip-worktrees`) |
+| `--home <path>` | Home root for worktree instances (default: `~/.business-factory-worktrees`) |
 | `--from-config <path>` | Source config.json to seed from |
 | `--from-data-dir <path>` | Source PAPERCLIP_HOME used when deriving the source config |
 | `--from-instance <id>` | Source instance id (default: `default`) |
@@ -189,20 +206,20 @@ eval "$(paperclipai worktree env)"
 Examples:
 
 ```sh
-paperclipai worktree init --no-seed
-paperclipai worktree init --seed-mode full
-paperclipai worktree init --from-instance default
-paperclipai worktree init --from-data-dir ~/.paperclip
-paperclipai worktree init --force
+business-factoryai worktree init --no-seed
+business-factoryai worktree init --seed-mode full
+business-factoryai worktree init --from-instance default
+business-factoryai worktree init --from-data-dir ~/.business-factory
+business-factoryai worktree init --force
 ```
 
-**`pnpm paperclipai worktree:make <name> [options]`** — Create `~/NAME` as a git worktree, then initialize an isolated Paperclip instance inside it. This combines `git worktree add` with `worktree init` in a single step.
+**`pnpm business-factoryai worktree:make <name> [options]`** — Create `~/NAME` as a git worktree, then initialize an isolated Business Factory instance inside it. This combines `git worktree add` with `worktree init` in a single step.
 
 | Option | Description |
 |---|---|
 | `--start-point <ref>` | Remote ref to base the new branch on (e.g. `origin/main`) |
 | `--instance <id>` | Explicit isolated instance id |
-| `--home <path>` | Home root for worktree instances (default: `~/.paperclip-worktrees`) |
+| `--home <path>` | Home root for worktree instances (default: `~/.business-factory-worktrees`) |
 | `--from-config <path>` | Source config.json to seed from |
 | `--from-data-dir <path>` | Source PAPERCLIP_HOME used when deriving the source config |
 | `--from-instance <id>` | Source instance id (default: `default`) |
@@ -215,12 +232,12 @@ paperclipai worktree init --force
 Examples:
 
 ```sh
-pnpm paperclipai worktree:make paperclip-pr-432
-pnpm paperclipai worktree:make my-feature --start-point origin/main
-pnpm paperclipai worktree:make experiment --no-seed
+pnpm business-factoryai worktree:make business-factory-pr-432
+pnpm business-factoryai worktree:make my-feature --start-point origin/main
+pnpm business-factoryai worktree:make experiment --no-seed
 ```
 
-**`pnpm paperclipai worktree env [options]`** — Print shell exports for the current worktree-local Paperclip instance.
+**`pnpm business-factoryai worktree env [options]`** — Print shell exports for the current worktree-local Business Factory instance.
 
 | Option | Description |
 |---|---|
@@ -230,12 +247,12 @@ pnpm paperclipai worktree:make experiment --no-seed
 Examples:
 
 ```sh
-pnpm paperclipai worktree env
-pnpm paperclipai worktree env --json
-eval "$(pnpm paperclipai worktree env)"
+pnpm business-factoryai worktree env
+pnpm business-factoryai worktree env --json
+eval "$(pnpm business-factoryai worktree env)"
 ```
 
-For project execution worktrees, Paperclip can also run a project-defined provision command after it creates or reuses an isolated git worktree. Configure this on the project's execution workspace policy (`workspaceStrategy.provisionCommand`). The command runs inside the derived worktree and receives `PAPERCLIP_WORKSPACE_*`, `PAPERCLIP_PROJECT_ID`, `PAPERCLIP_AGENT_ID`, and `PAPERCLIP_ISSUE_*` environment variables so each repo can bootstrap itself however it wants.
+For project execution worktrees, Business Factory can also run a project-defined provision command after it creates or reuses an isolated git worktree. Configure this on the project's execution workspace policy (`workspaceStrategy.provisionCommand`). The command runs inside the derived worktree and receives `PAPERCLIP_WORKSPACE_*`, `PAPERCLIP_PROJECT_ID`, `PAPERCLIP_AGENT_ID`, and `PAPERCLIP_ISSUE_*` environment variables so each repo can bootstrap itself however it wants.
 
 ## Quick Health Checks
 
@@ -256,7 +273,7 @@ Expected:
 To wipe local dev data and start fresh:
 
 ```sh
-rm -rf ~/.paperclip/instances/default/db
+rm -rf ~/.business-factory/instances/default/db
 pnpm dev
 ```
 
@@ -266,23 +283,23 @@ If you set `DATABASE_URL`, the server will use that instead of embedded PostgreS
 
 ## Automatic DB Backups
 
-Paperclip can run automatic DB backups on a timer. Defaults:
+Business Factory can run automatic DB backups on a timer. Defaults:
 
 - enabled
 - every 60 minutes
 - retain 30 days
-- backup dir: `~/.paperclip/instances/default/data/backups`
+- backup dir: `~/.business-factory/instances/default/data/backups`
 
 Configure these in:
 
 ```sh
-pnpm paperclipai configure --section database
+pnpm business-factoryai configure --section database
 ```
 
 Run a one-off backup manually:
 
 ```sh
-pnpm paperclipai db:backup
+pnpm business-factoryai db:backup
 # or:
 pnpm db:backup
 ```
@@ -298,7 +315,7 @@ Environment overrides:
 
 Agent env vars now support secret references. By default, secret values are stored with local encryption and only secret refs are persisted in agent config.
 
-- Default local key path: `~/.paperclip/instances/default/secrets/master.key`
+- Default local key path: `~/.business-factory/instances/default/secrets/master.key`
 - Override key material directly: `PAPERCLIP_SECRETS_MASTER_KEY`
 - Override key file path: `PAPERCLIP_SECRETS_MASTER_KEY_FILE`
 
@@ -312,9 +329,9 @@ When strict mode is enabled, sensitive env keys (for example `*_API_KEY`, `*_TOK
 
 CLI configuration support:
 
-- `pnpm paperclipai onboard` writes a default `secrets` config section (`local_encrypted`, strict mode off, key file path set) and creates a local key file when needed.
-- `pnpm paperclipai configure --section secrets` lets you update provider/strict mode/key path and creates the local key file when needed.
-- `pnpm paperclipai doctor` validates secrets adapter configuration and can create a missing local key file with `--repair`.
+- `pnpm business-factoryai onboard` writes a default `secrets` config section (`local_encrypted`, strict mode off, key file path set) and creates a local key file when needed.
+- `pnpm business-factoryai configure --section secrets` lets you update provider/strict mode/key path and creates the local key file when needed.
+- `pnpm business-factoryai doctor` validates secrets adapter configuration and can create a missing local key file with `--repair`.
 
 Migration helper for existing inline env secrets:
 
@@ -338,27 +355,27 @@ Default behavior:
 
 ## CLI Client Operations
 
-Paperclip CLI now includes client-side control-plane commands in addition to setup commands.
+Business Factory CLI now includes client-side control-plane commands in addition to setup commands.
 
 Quick examples:
 
 ```sh
-pnpm paperclipai issue list --company-id <company-id>
-pnpm paperclipai issue create --company-id <company-id> --title "Investigate checkout conflict"
-pnpm paperclipai issue update <issue-id> --status in_progress --comment "Started triage"
+pnpm business-factoryai issue list --company-id <company-id>
+pnpm business-factoryai issue create --company-id <company-id> --title "Investigate checkout conflict"
+pnpm business-factoryai issue update <issue-id> --status in_progress --comment "Started triage"
 ```
 
 Set defaults once with context profiles:
 
 ```sh
-pnpm paperclipai context set --api-base http://localhost:3100 --company-id <company-id>
+pnpm business-factoryai context set --api-base http://localhost:3100 --company-id <company-id>
 ```
 
 Then run commands without repeating flags:
 
 ```sh
-pnpm paperclipai issue list
-pnpm paperclipai dashboard get
+pnpm business-factoryai issue list
+pnpm business-factoryai dashboard get
 ```
 
 See full command reference in `doc/CLI.md`.
@@ -371,7 +388,7 @@ Agent-oriented invite onboarding now exposes machine-readable API docs:
 - `GET /api/invites/:token/onboarding` returns onboarding manifest details (registration endpoint, claim endpoint template, skill install hints).
 - `GET /api/invites/:token/onboarding.txt` returns a plain-text onboarding doc intended for both human operators and agents (llm.txt-style handoff), including optional inviter message and suggested network host candidates.
 - `GET /api/skills/index` lists available skill documents.
-- `GET /api/skills/paperclip` returns the Paperclip heartbeat skill markdown.
+- `GET /api/skills/business-factory` returns the Business Factory heartbeat skill markdown.
 
 ## OpenClaw Join Smoke Test
 
@@ -419,11 +436,11 @@ Model behavior for this smoke script:
 
 State behavior for this smoke script:
 
-- defaults to isolated config dir `~/.openclaw-paperclip-smoke`
+- defaults to isolated config dir `~/.openclaw-business-factory-smoke`
 - resets smoke agent state each run by default (`OPENCLAW_RESET_STATE=1`) to avoid stale provider/auth drift
 
 Networking behavior for this smoke script:
 
-- auto-detects and prints a Paperclip host URL reachable from inside OpenClaw Docker
+- auto-detects and prints a Business Factory host URL reachable from inside OpenClaw Docker
 - default container-side host alias is `host.docker.internal` (override with `PAPERCLIP_HOST_FROM_CONTAINER` / `PAPERCLIP_HOST_PORT`)
-- if Paperclip rejects container hostnames in authenticated/private mode, allow `host.docker.internal` via `pnpm paperclipai allowed-hostname host.docker.internal` and restart Paperclip
+- if Business Factory rejects container hostnames in authenticated/private mode, allow `host.docker.internal` via `pnpm business-factoryai allowed-hostname host.docker.internal` and restart Business Factory

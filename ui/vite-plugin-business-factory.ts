@@ -7,7 +7,7 @@ export default function paperclipPlugins(): Plugin {
   const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
   return {
-    name: 'vite-plugin-paperclip',
+    name: 'vite-plugin-business-factory',
     resolveId(id) {
       if (id === virtualModuleId) {
         return resolvedVirtualModuleId;

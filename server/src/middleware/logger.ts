@@ -6,7 +6,7 @@ import { resolveDefaultLogsDir, resolveHomeAwarePath } from "../home-paths.js";
 import { ensureWritableLogDir } from "../log-dir.js";
 
 function resolveServerLogDir(): string {
-  const envOverride = process.env.PAPERCLIP_LOG_DIR?.trim();
+  const envOverride = process.env.BUSINESS_FACTORY_LOG_DIR?.trim();
   if (envOverride) return resolveHomeAwarePath(envOverride);
 
   const fileLogDir = readConfigFile()?.logging.logDir?.trim();

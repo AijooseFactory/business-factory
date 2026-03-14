@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
-import paperclipPlugins from "./vite-plugin-paperclip";
+import paperclipPlugins from "./vite-plugin-business-factory";
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), paperclipPlugins()],

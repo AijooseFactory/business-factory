@@ -38,9 +38,28 @@ tmp/
 # Editor / tool temp files
 *.tmp
 .vscode/
-.claude/settings.local.json
+.claude/
+.agents/
 .paperclip-local/
 
 # Playwright
 tests/e2e/test-results/
 tests/e2e/playwright-report/
+
+# Developer documentation (end-users see /docs)
+doc/
+
+# Development plans and specs
+plans/
+
+# Claude Code skills
+skills/
+
+# E2E tests
+tests/
+
+# Development scripts (keep essential deployment scripts)
+scripts/dev-*
+scripts/check-*
+scripts/smoke/
+scripts/test-*

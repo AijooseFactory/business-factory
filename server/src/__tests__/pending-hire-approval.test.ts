@@ -27,7 +27,7 @@ function createAgent(overrides: Partial<PendingHireApprovalAgentSnapshot> = {}):
     adapterType: "openclaw_gateway",
     adapterConfig: {
       url: "ws://host.docker.internal:3000",
-      paperclipApiUrl: "http://host.docker.internal:3100",
+      businessFactoryApiUrl: "http://host.docker.internal:3100",
       headers: {
         "x-openclaw-token": "gateway-token-1234567890",
       },
@@ -105,7 +105,7 @@ describe("syncPendingHireApprovalForAgent", () => {
     expect(payload.adapterType).toBe("openclaw_gateway");
     expect(payload.adapterConfig).toEqual({
       url: "ws://host.docker.internal:3000",
-      paperclipApiUrl: "http://host.docker.internal:3100",
+      businessFactoryApiUrl: "http://host.docker.internal:3100",
       headers: {
         "x-openclaw-token": REDACTED_EVENT_VALUE,
       },
@@ -123,7 +123,7 @@ describe("syncPendingHireApprovalForAgent", () => {
       adapterType: "openclaw_gateway",
       adapterConfig: {
         url: "ws://host.docker.internal:3000",
-        paperclipApiUrl: "http://host.docker.internal:3100",
+        businessFactoryApiUrl: "http://host.docker.internal:3100",
         headers: {
           "x-openclaw-token": REDACTED_EVENT_VALUE,
         },

@@ -1,40 +1,22 @@
-## What is Business Factory?
+# What is Business Factory?
 
-# Open-source orchestration for zero-human companies
+## Open-source office spaces for zero-human or human-in-the-loop AI Businesses
 
-**Business Factory is a Paperclip-derived orchestration platform with first-class Agent Zero integration.**
+**Business Factory is an AI Business orchestration platform.**
 
-Business Factory is a Node.js server and React UI that orchestrates a team of AI agents to run a business. It starts from the Paperclip model, then adds meticulous operator-focused enhancements, including Agent Zero integration assets that live in this repo instead of as ad hoc local hacks.
+Business Factory is a Node.js server and React UI that orchestrates a team of AI agents to run a business. It has org charts, budgets, governance, goal alignment, and agent coordination.
 
-It looks like a task manager — but under the hood it has org charts, budgets, governance, goal alignment, and agent coordination.
-
-**Manage business goals, not pull requests.**
-
-> Compatibility note: the current codebase still preserves some Paperclip package names and internal identifiers while the Business Factory rebrand is being completed.
-
-## Agent Zero First
-
-Business Factory treats Agent Zero as a first-class integration, not an afterthought.
-
-- The Paperclip-derived app lives in this repo.
-- The Agent Zero integration assets live in [`integrations/agent-zero`](./integrations/agent-zero).
-- The install path is interactive and designed to add only the missing Agent Zero files without overwriting user settings, models, or API keys.
-
-To install the Agent Zero side after Agent Zero itself is present:
-
-```bash
-./scripts/install-agent-zero-business-factory.sh
-```
+> **Note:** Business Factory was previously named Paperclip. All `PAPERCLIP_*` environment variables are still supported for backward compatibility, but new deployments should use `BUSINESS_FACTORY_*` variable names.
 
 |        | Step            | Example                                                            |
 | ------ | --------------- | ------------------------------------------------------------------ |
 | **01** | Define the goal | _"Build the #1 AI note-taking app to $1M MRR."_                    |
-| **02** | Hire the team   | CEO, CTO, engineers, designers, marketers — any bot, any provider. |
+| **02** | Hire the team   | CEO, CTO, Chief of Staff, engineers, designers, marketers — any Ai Agent with a Heartbeat. |
 | **03** | Approve and run | Review strategy. Set budgets. Hit go. Monitor from the dashboard.  |
 
 <br/>
 
-> **COMING SOON: Clipmart** — Download and run entire companies with one click. Browse pre-built company templates — full org structures, agent configs, and skills — and import them into your Paperclip instance in seconds.
+**COMING SOON: The Business Marketplace** — Download and run entire companies with one click. Browse pre-built business templates — full org structures, agent configs, and skills — and import them into your Business Factory instance in seconds.
 
 <br/>
 
@@ -42,6 +24,7 @@ To install the Agent Zero side after Agent Zero itself is present:
 <table>
   <tr>
     <td align="center"><strong>Works<br/>with</strong></td>
+    <td align="center"><img src="doc/assets/logos/agent-zero.webp" width="32" alt="Agent Zero" /><br/><sub>Agent Zero</sub></td>
     <td align="center"><img src="doc/assets/logos/openclaw.svg" width="32" alt="OpenClaw" /><br/><sub>OpenClaw</sub></td>
     <td align="center"><img src="doc/assets/logos/claude.svg" width="32" alt="Claude" /><br/><sub>Claude Code</sub></td>
     <td align="center"><img src="doc/assets/logos/codex.svg" width="32" alt="Codex" /><br/><sub>Codex</sub></td>
@@ -51,19 +34,18 @@ To install the Agent Zero side after Agent Zero itself is present:
   </tr>
 </table>
 
-<em>If it can receive a heartbeat, it's hired.</em>
-
+<em>If it can receive a heartbeat, it cn be hired.</em>
 </div>
 
 <br/>
 
-## Paperclip is right for you if
+## Business Factory is right for you if:
 
-- ✅ You want to build **autonomous AI companies**
-- ✅ You **coordinate many different agents** (OpenClaw, Codex, Claude, Cursor) toward a common goal
-- ✅ You have **20 simultaneous Claude Code terminals** open and lose track of what everyone is doing
-- ✅ You want agents running **autonomously 24/7**, but still want to audit work and chime in when needed
-- ✅ You want to **monitor costs** and enforce budgets
+- ✅ You want to build **autonomous Ai companies or businesses**
+- ✅ You **coordinate many different agents** (Agent Zero, OpenClaw, Codex, Claude, Cursor) toward a common goal.
+- ✅ You have **20 simultaneous Claude Code terminals** open and lose track of what everyone is doing.
+- ✅ You want agents running **autonomously 24/7**, but still want to audit work and chime in when needed.
+- ✅ You want to **monitor LLM costs** and enforce budgets.
 - ✅ You want a process for managing agents that **feels like using a task manager**
 - ✅ You want to manage your autonomous businesses **from your phone**
 
@@ -118,28 +100,28 @@ Monitor and manage your autonomous businesses from anywhere.
 
 <br/>
 
-## Problems Paperclip solves
+## Problems Business Factory solves
 
-| Without Paperclip                                                                                                                     | With Paperclip                                                                                                                         |
+| Without Business Factory                                                                                                                     | With Business Factory                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | ❌ You have 20 Claude Code tabs open and can't track which one does what. On reboot you lose everything.                              | ✅ Tasks are ticket-based, conversations are threaded, sessions persist across reboots.                                                |
 | ❌ You manually gather context from several places to remind your bot what you're actually doing.                                     | ✅ Context flows from the task up through the project and company goals — your agent always knows what to do and why.                  |
-| ❌ Folders of agent configs are disorganized and you're re-inventing task management, communication, and coordination between agents. | ✅ Paperclip gives you org charts, ticketing, delegation, and governance out of the box — so you run a company, not a pile of scripts. |
+| ❌ Folders of agent configs are disorganized and you're re-inventing task management, communication, and coordination between agents. | ✅ Business Factory gives you org charts, ticketing, delegation, and governance out of the box — so you run a company, not a pile of scripts. |
 | ❌ Runaway loops waste hundreds of dollars of tokens and max your quota before you even know what happened.                           | ✅ Cost tracking surfaces token budgets and throttles agents when they're out. Management prioritizes with budgets.                    |
 | ❌ You have recurring jobs (customer support, social, reports) and have to remember to manually kick them off.                        | ✅ Heartbeats handle regular work on a schedule. Management supervises.                                                                |
-| ❌ You have an idea, you have to find your repo, fire up Claude Code, keep a tab open, and babysit it.                                | ✅ Add a task in Paperclip. Your coding agent works on it until it's done. Management reviews their work.                              |
+| ❌ You have an idea, you have to find your repo, fire up Claude Code, keep a tab open, and babysit it.                                | ✅ Add a task in Business Factory. Your coding agent works on it until it's done. Management reviews their work.                              |
 
 <br/>
 
-## Why Paperclip is special
+## Why Business Factory is special
 
-Paperclip handles the hard orchestration details correctly.
+Business Factory handles the hard orchestration details correctly.
 
 |                                   |                                                                                                               |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | **Atomic execution.**             | Task checkout and budget enforcement are atomic, so no double-work and no runaway spend.                      |
 | **Persistent agent state.**       | Agents resume the same task context across heartbeats instead of restarting from scratch.                     |
-| **Runtime skill injection.**      | Agents can learn Paperclip workflows and project context at runtime, without retraining.                      |
+| **Runtime skill injection.**      | Agents can learn Business Factory workflows and project context at runtime, without retraining.                      |
 | **Governance with rollback.**     | Approval gates are enforced, config changes are revisioned, and bad changes can be rolled back safely.        |
 | **Goal-aware execution.**         | Tasks carry full goal ancestry so agents consistently see the "why," not just a title.                        |
 | **Portable company templates.**   | Export/import orgs, agents, and skills with secret scrubbing and collision handling.                          |
@@ -147,16 +129,16 @@ Paperclip handles the hard orchestration details correctly.
 
 <br/>
 
-## What Paperclip is not
+## What Business Factory is not
 
 |                              |                                                                                                                      |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | **Not a chatbot.**           | Agents have jobs, not chat windows.                                                                                  |
 | **Not an agent framework.**  | We don't tell you how to build agents. We tell you how to run a company made of them.                                |
-| **Not a workflow builder.**  | No drag-and-drop pipelines. Paperclip models companies — with org charts, goals, budgets, and governance.            |
-| **Not a prompt manager.**    | Agents bring their own prompts, models, and runtimes. Paperclip manages the organization they work in.               |
-| **Not a single-agent tool.** | This is for teams. If you have one agent, you probably don't need Paperclip. If you have twenty — you definitely do. |
-| **Not a code review tool.**  | Paperclip orchestrates work, not pull requests. Bring your own review process.                                       |
+| **Not a workflow builder.**  | No drag-and-drop pipelines. Business Factory models companies — with org charts, goals, budgets, and governance.            |
+| **Not a prompt manager.**    | Agents bring their own prompts, models, and runtimes. Business Factory manages the organization they work in.               |
+| **Not a single-agent tool.** | This is for teams. If you have one agent, you probably don't need Business Factory. If you have twenty — you definitely do. |
+| **Not a code review tool.**  | Business Factory orchestrates work, not pull requests. Bring your own review process.                                       |
 
 <br/>
 
@@ -171,12 +153,6 @@ pnpm install
 pnpm dev
 ```
 
-To install the Agent Zero integration assets after Agent Zero itself is installed:
-
-```bash
-./scripts/install-agent-zero-business-factory.sh
-```
-
 This starts the API server at `http://localhost:3100`. An embedded PostgreSQL database is created automatically — no setup required.
 
 > **Requirements:** Node.js 20+, pnpm 9.15+
@@ -188,21 +164,21 @@ This starts the API server at `http://localhost:3100`. An embedded PostgreSQL da
 **What does a typical setup look like?**
 Locally, a single Node.js process manages an embedded Postgres and local file storage. For production, point it at your own Postgres and deploy however you like. Configure projects, agents, and goals — the agents take care of the rest.
 
-If you're a solo-entreprenuer you can use Tailscale to access Paperclip on the go. Then later you can deploy to e.g. Vercel when you need it.
+If you're a solo-entreprenuer you can use Tailscale to access Business Factory on the go. Then later you can deploy to e.g. Vercel when you need it.
 
 **Can I run multiple companies?**
 Yes. A single deployment can run an unlimited number of companies with complete data isolation.
 
-**How is Paperclip different from agents like OpenClaw or Claude Code?**
-Paperclip _uses_ those agents. It orchestrates them into a company — with org charts, budgets, goals, governance, and accountability.
+**How is Business Factory different from agents like OpenClaw or Claude Code?**
+Business Factory _uses_ those agents. It orchestrates them into a company — with org charts, budgets, goals, governance, and accountability.
 
-**Why should I use Paperclip instead of just pointing my OpenClaw to Asana or Trello?**
-Agent orchestration has subtleties in how you coordinate who has work checked out, how to maintain sessions, monitoring costs, establishing governance - Paperclip does this for you.
+**Why should I use Business Factory instead of just pointing my OpenClaw to Asana or Trello?**
+Agent orchestration has subtleties in how you coordinate who has work checked out, how to maintain sessions, monitoring costs, establishing governance - Business Factory does this for you.
 
 (Bring-your-own-ticket-system is on the Roadmap)
 
 **Do agents run continuously?**
-By default, agents run on scheduled heartbeats and event-based triggers (task assignment, @-mentions). You can also hook in continuous agents like OpenClaw. You bring your agent and Paperclip coordinates.
+By default, agents run on scheduled heartbeats and event-based triggers (task assignment, @-mentions). You can also hook in continuous agents like OpenClaw. You bring your agent and Business Factory coordinates.
 
 <br/>
 
@@ -227,7 +203,7 @@ See [doc/DEVELOPING.md](doc/DEVELOPING.md) for the full development guide.
 
 - ⚪ Get OpenClaw onboarding easier
 - ⚪ Get cloud agents working e.g. Cursor / e2b agents
-- ⚪ ClipMart - buy and sell entire agent companies
+- ⚪ Business Marketplace - buy and sell entire agent companies
 - ⚪ Easy agent configurations / easier to understand
 - ⚪ Better support for harness engineering
 - ⚪ Plugin system (e.g. if you want to add a knowledgebase, custom tracing, queues, etc)
@@ -245,4 +221,4 @@ We welcome contributions. See the [contributing guide](CONTRIBUTING.md) for deta
 
 ## License
 
-MIT &copy; 2026 AI joose Factory, LLC.
+MIT

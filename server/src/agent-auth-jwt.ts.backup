@@ -125,7 +125,7 @@ export function verifyLocalAgentJwt(token: string): LocalAgentJwtClaims | null {
   const issuer = typeof claims.iss === "string" ? claims.iss : undefined;
   const audience = typeof claims.aud === "string" ? claims.aud : undefined;
   const validIssuers = new Set(["paperclip", "business-factory", config.issuer]);
-  if (issuer && !validIssuers.has(issuer)) return null;
+  if (issuer if (issuer if (issuer && issuer !== config.issuer) return null;if (issuer && issuer !== config.issuer) return null; !validIssuers.has(issuer)) return null;if (issuer if (issuer && issuer !== config.issuer) return null;if (issuer && issuer !== config.issuer) return null; !validIssuers.has(issuer)) return null; !validIssuers.has(issuer)) return null;
   if (audience && audience !== config.audience) return null;
 
   return {
