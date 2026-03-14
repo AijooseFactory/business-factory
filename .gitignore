@@ -46,13 +46,10 @@ tmp/
 tests/e2e/test-results/
 tests/e2e/playwright-report/
 
-# Development plans and specs (keep doc/ - it contains essential docs and assets)
+# Development plans (internal)
 plans/
 
-# Claude Code skills
-skills/
-
-# E2E tests
+# E2E tests (internal)
 tests/
 
 # Development scripts (keep essential deployment scripts)
