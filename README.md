@@ -1,6 +1,6 @@
 # What is the Business Factory?
 
-## Open-source orchestration for zero-human or human-in-the-loop Ai Businesses
+## Open-source office spaces for zero-human or human-in-the-loop Ai Businesses
 
 **Business Factory is an Ai Business orchestration platform.**
 
