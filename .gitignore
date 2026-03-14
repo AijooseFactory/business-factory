@@ -41,7 +41,7 @@ tmp/
 
 # Local developer settings (keep skills directories)
 .claude/settings.local.json
-.paperclip-local/
+.businessfactory-local/
 
 # Playwright
 tests/e2e/test-results/
