@@ -201,7 +201,7 @@ See [doc/DEVELOPING.md](doc/DEVELOPING.md) for the full development guide.
 
 - ⚪ Get OpenClaw onboarding easier
 - ⚪ Get cloud agents working e.g. Cursor / e2b agents
-- ⚪ ClipMart - buy and sell entire agent companies
+- ⚪ Business Marketplace - buy and sell entire agent companies
 - ⚪ Easy agent configurations / easier to understand
 - ⚪ Better support for harness engineering
 - ⚪ Plugin system (e.g. if you want to add a knowledgebase, custom tracing, queues, etc)
