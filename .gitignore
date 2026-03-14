@@ -38,8 +38,9 @@ tmp/
 # Editor / tool temp files
 *.tmp
 .vscode/
-.claude/
-.agents/
+
+# Local developer settings (keep skills directories)
+.claude/settings.local.json
 .paperclip-local/
 
 # Playwright
