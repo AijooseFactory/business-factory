@@ -5,7 +5,7 @@
 
 Business Factory is a Node.js server and React UI that orchestrates a team of AI agents to run a business. It has org charts, budgets, governance, goal alignment, and agent coordination.
 
-> **Note:** Business Factory was previously named Paperclip. All `PAPERCLIP_*` environment variables are still supported for backward compatibility, but new deployments should use `BUSINESS_FACTORY_*` variable names.
+> **Note:** Business Factory was inspired by Paperclip, so all `PAPERCLIP_*` environment variables are still supported for backward compatibility, but new deployments should use `BUSINESS_FACTORY_*` variable names.
 
 |        | Step            | Example                                                            |
 | ------ | --------------- | ------------------------------------------------------------------ |
