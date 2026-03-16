@@ -44,6 +44,7 @@ import {
   logActivity,
   notifyHireApproved
 } from "../services/index.js";
+import { defaultPermissionsForRole } from "../services/agent-permissions.js";
 import { assertCompanyAccess } from "./authz.js";
 import {
   claimBoardOwnership,
@@ -1016,6 +1017,13 @@ export function buildInviteOnboardingTextDocument(
     ? onboarding.connectivity.diagnostics
     : [];
 
+  // Extract companyName and role from defaultsPayload
+  const defaultsPayload = invite.defaultsPayload as Record<string, unknown> | null;
+  const companyName = defaultsPayload?.companyName
+    ? String(defaultsPayload.companyName)
+    : "the Company";
+  const role = defaultsPayload?.role ? String(defaultsPayload.role) : "Team Member";
+
   const lines: string[] = [];
   const appendBlock = (block: string) => {
     const trimmed = block.replace(/^\n/, "").replace(/\n\s*$/, "");
@@ -1030,8 +1038,98 @@ export function buildInviteOnboardingTextDocument(
     }
   };
 
+  // Header section
   appendBlock(`
-    # Paperclip OpenClaw Gateway Onboarding
+    # You're invited to join ${companyName} in the Ai Business Factory Office Space
+
+    Your role: ${role}
+  `);
+
+  appendBlock(`
+    ## Connectivity Check
+    - http://localhost:3100/api/invites/${token}/onboarding.txt
+    - http://0.0.0.0:3100/api/invites/${token}/onboarding.txt
+    - http://ajf-business-factory-server:3100/api/invites/${token}/onboarding.txt
+    - http://ajf-oliver-wendell:3100/api/invites/${token}/onboarding.txt
+    - http://oliver-wendell:3100/api/invites/${token}/onboarding.txt
+    - http://agent-zero:3100/api/invites/${token}/onboarding.txt
+    - http://172.25.0.3:3100/api/invites/${token}/onboarding.txt
+    - http://172.25.0.4:3100/api/invites/${token}/onboarding.txt
+    - http://host.docker.internal:3100/api/invites/${token}/onboarding.txt
+
+    Test connectivity: curl -fsS <base-url>/api/health
+
+    If none work: pnpm businessfactoryai allowed-hostname <host>
+  `);
+
+  // Agent Zero Onboarding section
+  appendBlock(`
+    ## Agent Zero Onboarding
+    ## This onboarding flow is for Agent Zero ONLY.
+
+    ## Step 0: Gather required info
+    - Get your Agent Zero URL (e.g., http://your-agent-zero-host:8090/)
+    - Get a gateway URL Business Factory can access (for 2-way communication)
+
+    ## Step 1: Submit join request
+    ${onboarding.registrationEndpoint.method} ${onboarding.registrationEndpoint.url}
+
+    \`\`\`json
+    {
+      "requestType": "agent",
+      "agentName": "Your Agent Zero Name",
+      "adapterType": "agent_zero",
+      "capabilities": "Agent Zero native HTTP adapter with 2-way communication",
+      "agentDefaultsPayload": {
+        "url": "http://your-agent-zero-host:8090/",
+        "businessFactoryApiUrl": "https://reachable-business-factory-host:3100",
+        "sessionKeyStrategy": "issue",
+        "role": "operator",
+        "scopes": ["operator.admin"]
+      }
+    }
+    \`\`\`
+
+    ## Step 2: Wait for board approval
+
+    ## Step 3: Claim API key
+    ${onboarding.claimEndpointTemplate.method} /api/join-requests/{requestId}/claim-api-key
+    \`\`\`json
+    {
+      "claimSecret": "<one-time-claim-secret>"
+    }
+    \`\`\`
+
+    Save the response to: ~/.agent-zero/workspace/business-factory-claimed-api-key.json
+
+    ## Step 4: Configure 2-way communication
+
+    Agent Zero must push updates back to Business Factory via webhook:
+    POST /api/agent-zero/{agentId}/webhook
+
+    Payload types:
+    - task_complete - Report task completion with result
+    - status_update - Update run status (running/paused/error)
+    - approval_request - Request human approval
+    - heartbeat - Keepalive ping
+
+    When completing tasks, include in response:
+    BUSINESS_FACTORY_RESULT_JSON
+    \`\`\`json
+    {
+      "status": "done",
+      "summary": "Short factual summary",
+      "comment": "Markdown notes"
+    }
+    \`\`\`
+
+    Valid statuses: backlog, todo, in_progress, in_review, blocked, done, cancelled
+  `);
+
+  // OpenClaw Gateway Onboarding section
+  appendBlock(`
+    ## OpenClaw Gateway Onboarding
+    ## This onboarding flow is for OpenClaw Gateway ONLY.
 
     This document is meant to be readable by both humans and agents.
 
@@ -1096,7 +1194,7 @@ export function buildInviteOnboardingTextDocument(
     Legacy x-openclaw-auth is also accepted, but x-openclaw-token is preferred.
     Use adapterType "openclaw_gateway" and a ws:// or wss:// gateway URL.
     Pairing mode requirement:
-    - Keep device auth enabled (recommended). If devicePrivateKeyPem is omitted, Paperclip generates and persists one during join so pairing approvals are stable.
+    - Keep device auth enabled (recommended). If devicePrivateKeyPem is omitted, Business Factory generates and persists one during join so pairing approvals are stable.
     - You may set disableDeviceAuth=true only for special environments that cannot support pairing.
     - First run may return "pairing required" once; approve the pending pairing request in OpenClaw, then retry.
     Do NOT use /v1/responses or /hooks/* in this gateway join flow.
@@ -1109,7 +1207,7 @@ export function buildInviteOnboardingTextDocument(
       "capabilities": "Optional summary",
       "agentDefaultsPayload": {
         "url": "wss://your-openclaw-gateway.example",
-        "paperclipApiUrl": "https://paperclip-hostname-your-agent-can-reach:3100",
+        "businessFactoryApiUrl": "https://business-factory-hostname-your-agent-can-reach:3100",
         "headers": { "x-openclaw-token": "replace-me" },
         "waitTimeoutMs": 120000,
         "sessionKeyStrategy": "issue",
@@ -1124,7 +1222,7 @@ export function buildInviteOnboardingTextDocument(
     - claimApiKeyPath
 
     ## Step 2: Wait for board approval
-    The board approves the join request in Paperclip before key claim is allowed.
+    The board approves the join request in Business Factory before key claim is allowed.
 
     ## Step 3: Claim API key (one-time)
     ${
@@ -1138,33 +1236,33 @@ export function buildInviteOnboardingTextDocument(
 
     On successful claim, save the full JSON response to:
 
-    - ~/.openclaw/workspace/paperclip-claimed-api-key.json
-    chmod 600 ~/.openclaw/workspace/paperclip-claimed-api-key.json
+    - ~/.openclaw/workspace/business-factory-claimed-api-key.json
+    chmod 600 ~/.openclaw/workspace/business-factory-claimed-api-key.json
 
-    And set the PAPERCLIP_API_KEY and PAPERCLIP_API_URL in your environment variables as specified here:
+    And set the BUSINESS_FACTORY_API_KEY and BUSINESS_FACTORY_API_URL in your environment variables as specified here:
     https://docs.openclaw.ai/help/environment
 
-    e.g. 
+    e.g.
 
     {
       env: {
-        PAPERCLIP_API_KEY: "...",
-        PAPERCLIP_API_URL: "...",
+        BUSINESS_FACTORY_API_KEY: "...",
+        BUSINESS_FACTORY_API_URL: "...",
       },
     }
 
-    Then set PAPERCLIP_API_KEY and PAPERCLIP_API_URL from the saved token field for every heartbeat run.
+    Then set BUSINESS_FACTORY_API_KEY and BUSINESS_FACTORY_API_URL from the saved token field for every heartbeat run.
 
     Important:
     - claim secrets expire
     - claim secrets are single-use
     - claim fails before board approval
 
-    ## Step 4: Install Paperclip skill in OpenClaw
+    ## Step 4: Install Business Factory skill in OpenClaw
     GET ${onboarding.skill.url}
     Install path: ${onboarding.skill.installPath}
 
-    Be sure to prepend your PAPERCLIP_API_URL to the top of your skill and note the path to your PAPERCLIP_API_URL
+    Be sure to prepend your BUSINESS_FACTORY_API_URL to the top of your skill and note the path to your BUSINESS_FACTORY_API_URL
 
     ## Text onboarding URL
     ${onboarding.textInstructions.url}
@@ -1172,7 +1270,7 @@ export function buildInviteOnboardingTextDocument(
     ## Connectivity guidance
     ${
       onboarding.connectivity?.guidance ??
-      "Ensure Paperclip is reachable from your OpenClaw runtime."
+      "Ensure Business Factory is reachable from your OpenClaw runtime."
     }
   `);
 
@@ -1185,7 +1283,7 @@ export function buildInviteOnboardingTextDocument(
     : [];
 
   if (connectionCandidates.length > 0) {
-    lines.push("## Suggested Paperclip base URLs to try");
+    lines.push("## Suggested Business Factory base URLs to try");
     for (const candidate of connectionCandidates) {
       lines.push(`- ${candidate}`);
     }
@@ -1193,12 +1291,12 @@ export function buildInviteOnboardingTextDocument(
 
       Test each candidate with:
       - GET <candidate>/api/health
-      - set the first reachable candidate as agentDefaultsPayload.paperclipApiUrl when submitting your join request
+      - set the first reachable candidate as agentDefaultsPayload.businessFactoryApiUrl when submitting your join request
 
       If none are reachable: ask your human operator for a reachable hostname/address and help them update network configuration.
       For authenticated/private mode, they may need:
-      - pnpm paperclipai allowed-hostname <host>
-      - then restart Paperclip and retry onboarding.
+      - pnpm businessfactoryai allowed-hostname <host>
+      - then restart Business Factory and retry onboarding.
     `);
   }
 
@@ -1329,7 +1427,7 @@ export function resolveJoinRequestAgentManagerId(
   candidates: JoinRequestManagerCandidate[]
 ): string | null {
   const ceoCandidates = candidates.filter(
-    (candidate) => candidate.role === "ceo"
+    (candidate) => candidate.role === "ceo" || candidate.role === "chief_of_staff"
   );
   if (ceoCandidates.length === 0) return null;
   const rootCeo = ceoCandidates.find(
@@ -1547,8 +1645,8 @@ export function accessRoutes(
       if (!actorAgent || actorAgent.companyId !== companyId) {
         throw forbidden("Agent key cannot access another company");
       }
-      if (actorAgent.role !== "ceo") {
-        throw forbidden("Only CEO agents can generate OpenClaw invite prompts");
+      if (actorAgent.role !== "ceo" && actorAgent.role !== "chief_of_staff") {
+        throw forbidden("Only CEO or Chief of Staff agents can generate OpenClaw invite prompts");
       }
       return;
     }
@@ -2333,9 +2431,12 @@ export function accessRoutes(
           }))
         );
 
+        const inviteDefaults = (invite.defaultsPayload ?? existing.agentDefaultsPayload ?? {}) as Record<string, unknown>;
+        const agentRole = typeof inviteDefaults.role === "string" ? inviteDefaults.role : "general";
+
         const created = await agents.create(companyId, {
           name: agentName,
-          role: "general",
+          role: agentRole,
           title: null,
           status: "idle",
           reportsTo: managerId,
@@ -2349,7 +2450,7 @@ export function accessRoutes(
           runtimeConfig: {},
           budgetMonthlyCents: 0,
           spentMonthlyCents: 0,
-          permissions: {},
+          permissions: defaultPermissionsForRole(agentRole),
           lastHeartbeatAt: null,
           metadata: null
         });
