@@ -1065,7 +1065,7 @@ export function buildInviteOnboardingTextDocument(
   // Agent Zero Onboarding section
   appendBlock(`
     ## Agent Zero Onboarding
-    ## This onboarding flow is for Agent Zero ONLY.
+    ### This onboarding flow is for Agent Zero ONLY.
 
     ## Step 0: Gather required info
     - Get your Agent Zero URL (e.g., http://your-agent-zero-host:8090/)
@@ -1129,7 +1129,7 @@ export function buildInviteOnboardingTextDocument(
   // OpenClaw Gateway Onboarding section
   appendBlock(`
     ## OpenClaw Gateway Onboarding
-    ## This onboarding flow is for OpenClaw Gateway ONLY.
+    ### This onboarding flow is for OpenClaw Gateway ONLY.
 
     This document is meant to be readable by both humans and agents.
 
