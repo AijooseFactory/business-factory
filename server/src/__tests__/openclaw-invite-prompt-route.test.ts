@@ -105,7 +105,7 @@ describe("POST /companies/:companyId/openclaw/invite-prompt", () => {
       .send({});
 
     expect(res.status).toBe(403);
-    expect(res.body.error).toContain("Only CEO agents");
+    expect(res.body.error).toContain("Only CEO or Chief of Staff");
   });
 
   it("allows CEO agent callers and creates an agent-only invite", async () => {
